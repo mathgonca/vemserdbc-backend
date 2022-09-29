@@ -4,6 +4,9 @@ public class Exercicio07 {
   public static void main(String[] args) {
     Scanner scanner = new Scanner(System.in);
 
+    System.out.println("Digite a quantidade do produto: ");
+    int quantidade = Integer.parseInt(scanner.nextLine());
+
     System.out.print("Digite o código do produto: ");
     String codigo = scanner.nextLine();
     double valor = 0;
@@ -18,10 +21,13 @@ public class Exercicio07 {
       valor = 2.5;
     }
 
+    valor *= quantidade;
+
     if (valor == 0) {
       System.out.println("Código Inválido");
     } else {
-      System.out.println("Código: " + codigo + "\nValor: R$ " + valor);
+      System.out.println(
+          "Código: " + codigo + "\n" + "Quantidade: " + quantidade + "\nValor: R$ " + String.format("%.2f", valor));
     }
   }
 }
