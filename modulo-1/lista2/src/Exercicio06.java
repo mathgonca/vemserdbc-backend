@@ -1,52 +1,23 @@
-import java.util.Scanner;
-
 public class Exercicio06 {
     public static void main(String[] args) {
-        String[] disciplinas = new String[4];
-        float[][] notas = new float[4][4];
+        float[][] notas = {{5, 6, 7, 8}, {5, 6, 7, 8}, {5, 6, 7, 8}, {5, 6, 7, 8}, {5, 6, 7, 8}};
         float[] mediaDisciplinas = new float[4];
-
-        Scanner scanner = new Scanner(System.in);
-
-        String disciplina;
-        float mediaDisciplina = 0;
+        float somaDasMedias = 0;
 
         for (int i = 0; i < 4; i++) {
-            float notaSoma = 0;
-
-            System.out.print("Digite o nome da disciplina: ");
-            disciplina = scanner.nextLine();
-            disciplinas[i] = disciplina;
-
-            for (int j = 0; j < 4; j++) {
-                System.out.print("Digite a nota " + (j + 1) + ": ");
-                float notaCache = Float.parseFloat(scanner.nextLine());
-                notas[i][j] = notaCache;
-
-                notaSoma += notaCache;
+            for (int j = 0; j < 5; j++) {
+                mediaDisciplinas[i] += notas[j][i];
             }
 
-            mediaDisciplinas[i] = notaSoma / 4;
+            mediaDisciplinas[i] /= 5;
+            somaDasMedias += mediaDisciplinas[i];
+
+            System.out.println("Média disciplina 0" + (i + 1) + ": " + mediaDisciplinas[i]);
         }
 
-        for (float medias: mediaDisciplinas) {
-            mediaDisciplina += medias;
-        }
+        float mediaGeral = somaDasMedias / mediaDisciplinas.length;
 
-        mediaDisciplina /= 4;
-
-        for (int i = 0; i < 4; i++) {
-            System.out.println(disciplinas[i] + " média: " + mediaDisciplinas[i]);
-        }
-
-        float mediaGeral = 0;
-
-        for (float media: mediaDisciplinas) {
-            mediaGeral += media;
-        }
-
-        mediaGeral /= 4;
-
+        System.out.println("--------------------------");
         System.out.println("Média geral: " + mediaGeral);
     }
 }

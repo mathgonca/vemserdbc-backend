@@ -2,41 +2,34 @@ import java.util.Scanner;
 
 public class Exercicio07 {
     public static void main(String[] args) {
-        String[] mercados = {"mercado01", "mercado02", "mercado03"};
-        float[] precoFinal = new float[3];
-        float[][] precoProdutos = new float[9][3];
+        // Mercado 01 mais barato
+        float[][] produtos = {{4, 5, 6}, {4, 5, 6}, {4, 5, 6}, {4, 5, 6}, {4, 5, 6}, {4, 5, 6}, {4, 5, 6}, {4, 5, 6}, {4, 5, 6}, {4, 5, 6}};
 
-        Scanner scanner = new Scanner(System.in);
+        // Mercado 02 mais barato
+        // float[][] produtos = {{5, 4, 6}, {5, 4, 6}, {5, 4, 6}, {5, 4, 6}, {5, 4, 6}, {5, 4, 6}, {5, 4, 6}, {5, 4, 6}, {5, 4, 6}, {5, 4, 6}};
 
-        for (int i = 0; i < 9; i++) {
-            for (int j = 0; j < 3; j++) {
-                System.out.print("Digite o preco do produto 0" + (i + 1) + " no mercado 0" + (j + 1) + ": ");
-                float precoCache = Float.parseFloat(scanner.nextLine());
-                precoProdutos[i][j] = precoCache;
-            }
-        }
+        // Mercado 03 mais barato
+        // float[][] produtos = {{6, 5, 4}, {6, 5, 4}, {6, 5, 4}, {6, 5, 4}, {6, 5, 4}, {6, 5, 4}, {6, 5, 4}, {6, 5, 4}, {6, 5, 4}, {6, 5, 4}};
 
-        for (int i = 0; i < 3; i++) {
-            float precoFinalCache = 0;
 
-            for (int j = 0; j < 9; j++) {
-                precoFinalCache += precoProdutos[j][i];
-            }
+        float[] precoTotal = new float[3];
 
-            precoFinal[i] = precoFinalCache;
-        }
-
-        float mercadoMaisBarato = 0;
-        int mercadoMaisBaratoIndex = 0;
+        float menorPrecoTotal = 0;
+        int indexMenorPreco = 0;
 
         for (int i = 0; i < 3; i++) {
-            if (i == 0 || precoFinal[i] < mercadoMaisBarato) {
-                mercadoMaisBarato = precoFinal[i];
-                mercadoMaisBaratoIndex = i;
+
+
+            for (int j = 0; j < 10; j++) {
+                precoTotal[i] += produtos[j][i];
+            }
+
+            if (i == 0 || precoTotal[i] < menorPrecoTotal) {
+                menorPrecoTotal = precoTotal[i];
+                indexMenorPreco = i + 1;
             }
         }
 
-        System.out.println("Mercado mais barato para suas compras: " + mercados[mercadoMaisBaratoIndex]);
+        System.out.println("O mercado mais barato é o mercado: Mercado 0" + indexMenorPreco);
     }
 }
-

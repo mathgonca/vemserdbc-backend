@@ -40,7 +40,7 @@ public class Exercicio05 {
         int maiorNotaFinal = 0;
         int matriculaMaiorNota = 0;
 
-        for(int i = 0; i < MAXIMO_ALUNOS; i++) {
+        for (int i = 0; i < MAXIMO_ALUNOS; i++) {
             if (alunos[i][NOTA_FINAL] > maiorNotaFinal) {
                 maiorNotaFinal = alunos[i][NOTA_FINAL];
                 matriculaMaiorNota = alunos[i][NOTA_FINAL];

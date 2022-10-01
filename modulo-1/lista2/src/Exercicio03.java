@@ -2,102 +2,80 @@ import java.util.Scanner;
 
 public class Exercicio03 {
 
-    public static float achaJogadorMaisAlto(float[] alturaArray) {
-        float maiorAltura = 0;
-
-        for (float altura: alturaArray) {
-            if (altura > maiorAltura) {
-                maiorAltura = altura;
-            }
-        }
-
-        return maiorAltura;
-    }
-
-    public static int achaJogadorMaisVelho(int[] idadesArray) {
-        int maiorIdade = 0;
-
-        for (int idade: idadesArray) {
-            if (idade > maiorIdade) {
-                maiorIdade = idade;
-            }
-        }
-
-        return maiorIdade;
-    }
-
-    public static float achaJogadorMaisPesado(float[] pesosArray) {
-        float maiorPeso = 0;
-
-        for (float peso: pesosArray) {
-            if (peso > maiorPeso) {
-                maiorPeso = peso;
-            }
-        }
-
-        return maiorPeso;
-    }
-
-    public static int calculaMediaIdades(int[] idadesArray, int index) {
-        int totalIdades = 0;
-
-        for (int idade: idadesArray) {
-            totalIdades += idade;
-        }
-
-        return totalIdades / index;
-    }
-
     public static void main(String[] args) {
-        String[] nomesJogadores = new String[25];
-        float[] alturasJogadores = new float[25];
-        int[] idadesJogadores = new int[25];
-        float[] pesosJogadores = new float[25];
+        String[] nomesJogadores = new String[10];
+        float[] alturasJogadores = new float[10];
+        int[] idadesJogadores = new int[10];
+        float[] pesosJogadores = new float[10];
 
         Scanner scanner = new Scanner(System.in);
 
         String nome;
-        float altura;
-        int idade;
-        float peso;
 
         int index = 0;
 
+        int indexJogadorMaisAlto = 0;
+        float alturaJogadorMaisAlto = 0;
+
+        int indexJogadorMaisVelho = 0;
+        int idadeJogadorMaisVelho = 0;
+
+        int indexJogadorMaisPesado = 0;
+        float pesoJogadorMaisPesado = 0;
+
+        float somaDasAlturas = 0;
+
         while (true) {
+            System.out.println("\nJOGADOR " + (index + 1));
+            System.out.println("----------------");
             System.out.print("Digite o nome do Jogador: ");
             nome = scanner.nextLine();
 
-            if (nome.equals("SAIR")) {
+            if (nome.equalsIgnoreCase("SAIR")) {
                 break;
             }
 
             nomesJogadores[index] = nome;
 
             System.out.print("Digite a altura do jogador: ");
-            altura = Float.parseFloat(scanner.nextLine());
-            alturasJogadores[index] = altura;
+            alturasJogadores[index] = Float.parseFloat(scanner.nextLine());
 
             System.out.print("Digite a idade do jogador: ");
-            idade = Integer.parseInt(scanner.nextLine());
-            idadesJogadores[index] = idade;
+            idadesJogadores[index] = Integer.parseInt(scanner.nextLine());
 
             System.out.print("Digite o peso do jogador: ");
-            peso = Float.parseFloat(scanner.nextLine());
-            pesosJogadores[index] = peso;
+            pesosJogadores[index] = Float.parseFloat(scanner.nextLine());
+
+            if (index == 0 || alturasJogadores[index] > alturaJogadorMaisAlto) {
+                alturaJogadorMaisAlto = alturasJogadores[index];
+                indexJogadorMaisAlto = index;
+            }
+
+            if (index == 0 || idadesJogadores[index] > idadeJogadorMaisVelho) {
+                idadeJogadorMaisVelho = idadesJogadores[index];
+                indexJogadorMaisVelho = index;
+            }
+
+            if (index == 0 || pesosJogadores[index] > pesoJogadorMaisPesado) {
+                pesoJogadorMaisPesado = pesosJogadores[index];
+                indexJogadorMaisPesado = index;
+            }
+
+            somaDasAlturas += alturasJogadores[index];
 
             index++;
         }
 
         int totalDeJogadores = index;
-        float jogadorMaisAlto = achaJogadorMaisAlto(alturasJogadores);
-        int jogadorMaisVelho = achaJogadorMaisVelho(idadesJogadores);
-        float jogadorMaisPesado = achaJogadorMaisPesado(pesosJogadores);
-        int mediaDeIdade = calculaMediaIdades(idadesJogadores, index);
+        String jogadorMaisAlto = nomesJogadores[indexJogadorMaisAlto];
+        String jogadorMaisVelho = nomesJogadores[indexJogadorMaisVelho];
+        String jogadorMaisPesado = nomesJogadores[indexJogadorMaisPesado];
+        float mediaDeAlturas = somaDasAlturas / index;
 
         System.out.println("Quantidade de jogadores cadastrados: " + totalDeJogadores);
-        System.out.println("Alturado do maior jogador: " + jogadorMaisAlto);
+        System.out.println("Altura do maior jogador: " + jogadorMaisAlto);
         System.out.println("Jogador mais velho: " + jogadorMaisVelho);
         System.out.println("Jogador mais pesado: " + jogadorMaisPesado);
-        System.out.println("Média das alturas jogadores: " + mediaDeIdade);
+        System.out.println("Média das alturas jogadores: " + String.format("%.2f", mediaDeAlturas));
     }
 }

@@ -8,7 +8,7 @@ public class Exercicio08 {
 
         System.out.println("Array de números:");
         System.out.println("----------------------------");
-        for (int numero: numeros) {
+        for (int numero : numeros) {
             System.out.print(numero + " ");
         }
 
@@ -20,7 +20,7 @@ public class Exercicio08 {
         int numerosMenores = 0;
         int numerosMaiores = 0;
 
-        for (int numero: numeros) {
+        for (int numero : numeros) {
             if (numero == numeroEscolhido) {
                 repeticoesNoArray++;
             }
