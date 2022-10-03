@@ -26,7 +26,7 @@ public class ContaCorrente {
     public boolean sacar(double valor) {
         double saldoCache = retornarSaldoComChequeEspecial();
 
-        if (saldoCache > valor) {
+        if (saldoCache >= valor && valor > 0) {
             saldo -= valor;
             return true;
         } else {
@@ -35,10 +35,8 @@ public class ContaCorrente {
     }
 
     public boolean depositar(double valor) {
-        double saldoAntesDoDeposito = saldo;
-        saldo += valor;
-
-        if (saldo == saldoAntesDoDeposito + valor) {
+        if (valor > 0) {
+            saldo += valor;
             return true;
         } else {
             return false;
@@ -52,7 +50,7 @@ public class ContaCorrente {
     public boolean transferir(ContaCorrente contaCorrente, double valor) {
         double saldoRemetente = retornarSaldoComChequeEspecial();
 
-        if (saldoRemetente > valor) {
+        if (saldoRemetente > valor && valor > 0) {
             contaCorrente.saldo += valor;
             saldo -= valor;
 
