@@ -43,5 +43,9 @@ public class Main {
         cliente01.imprimirEnderecos();
 
         contaCorrente02Poupanca.imprimir();
+
+        cliente02.imprimirCliente();
+        cliente02.imprimirContatos();
+        cliente02.imprimirEnderecos();
     }
 }

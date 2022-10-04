@@ -19,6 +19,44 @@ public abstract class Conta implements Movimentacao {
         this.saldo = saldo;
     }
 
+    @Override
+    public boolean sacar(double valor) {
+        double saldo = this.getSaldo();
+
+        if (saldo >= valor && valor > 0) {
+            this.setSaldo(saldo - valor);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean depositar(double valor) {
+        double saldo = this.getSaldo();
+
+        if (valor > 0) {
+            this.setSaldo(saldo + valor);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean transferir(Conta contaDestino, double valor) {
+        double saldoDestino = contaDestino.getSaldo();
+        double saldoRemetente = this.getSaldo();
+
+        if (saldoRemetente > valor && valor > 0) {
+            contaDestino.setSaldo(saldoDestino + valor);
+            this.setSaldo(saldoRemetente - valor);
+
+            return true;
+        } else {
+            return false;
+        }
+    }
     public Cliente getCliente() {
         return cliente;
     }

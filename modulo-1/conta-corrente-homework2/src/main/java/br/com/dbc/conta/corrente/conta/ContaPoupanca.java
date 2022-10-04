@@ -14,44 +14,6 @@ public class ContaPoupanca extends Conta implements Impressao {
     }
 
     @Override
-    public boolean sacar(double valor) {
-        double saldo = this.getSaldo();
-
-        if (saldo >= valor && valor > 0) {
-            this.setSaldo(saldo - valor);
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    @Override
-    public boolean depositar(double valor) {
-        double saldo = this.getSaldo();
-
-        if (valor > 0) {
-            this.setSaldo(saldo + valor);
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    @Override
-    public boolean transferir(Conta contaDestino, double valor) {
-        double saldoDestino = contaDestino.getSaldo();
-        double saldoRemetente = this.getSaldo();
-
-        if (saldoRemetente > valor && valor > 0) {
-            contaDestino.setSaldo(saldoDestino + valor);
-            this.setSaldo(saldoRemetente - valor);
-
-            return true;
-        } else {
-            return false;
-        }
-    }
-    @Override
     public void imprimir() {
         String numeroConta = this.getNumeroConta();
         int agencia = this.getAgencia();

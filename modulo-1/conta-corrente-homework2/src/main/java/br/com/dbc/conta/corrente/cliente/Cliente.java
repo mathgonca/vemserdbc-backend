@@ -50,21 +50,25 @@ public class Cliente {
     }
 
     public void imprimirContatos() {
-        System.out.println("CONTATOS");
-        System.out.println("=".repeat(20));
-        for (Contato contato : contatos) {
-            if (contato != null) {
-                contato.imprimirContato();
+        if (this.getContatos() != null) {
+            System.out.println("CONTATOS");
+            System.out.println("=".repeat(20));
+            for (Contato contato : contatos) {
+                if (contato != null) {
+                    contato.imprimirContato();
+                }
             }
         }
     }
 
     public void imprimirEnderecos() {
-        System.out.println("\nENDERECOS");
-        System.out.println("=".repeat(20));
-        for (Endereco endereco : enderecos) {
-            if (endereco != null) {
-                endereco.imprimirEndereco();
+        if (this.getEnderecos() != null) {
+            System.out.println("\nENDERECOS");
+            System.out.println("=".repeat(20));
+            for (Endereco endereco : enderecos) {
+                if (endereco != null) {
+                    endereco.imprimirEndereco();
+                }
             }
         }
     }
