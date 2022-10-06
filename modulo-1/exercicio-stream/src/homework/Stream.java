@@ -95,7 +95,9 @@ public class Stream {
         System.out.println("\n10 - Primeira pessoa com \"Paulo\" no nome nessa lista.");
         System.out.println("=".repeat(30));
 
-        Optional<Pessoa> paulo = lista.stream().filter(pessoa -> pessoa.getNome().contains("Paulo")).findFirst();
+        Optional<Pessoa> paulo = lista.stream()
+                .filter(pessoa -> pessoa.getNome().toUpperCase().contains("PAULO"))
+                .findFirst();
 
         if (paulo.isPresent()) {
             System.out.println(paulo.get());
