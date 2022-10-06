@@ -40,11 +40,14 @@ public class Main {
 
         ContaPagamento contaPagamento02 = new ContaPagamento(cliente02, "99999-0", 8888, 450);
 
-        contaCorrente01.imprimir();
-
         contaPagamento02.sacar(350);
         contaPagamento02.sacar(150);
 
+        contaPagamento02.transferir(contaCorrente02, 350);
+        contaPagamento02.transferir(contaCorrente02, 50);
+
+
+        contaCorrente01.imprimir();
         contaCorrente02.imprimir();
         contaPagamento02.imprimir();
     }

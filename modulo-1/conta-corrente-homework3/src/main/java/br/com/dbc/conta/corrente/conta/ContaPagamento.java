@@ -39,4 +39,19 @@ public class ContaPagamento extends Conta implements Impressao {
         System.out.println("Saldo: R$" + String.format("%.2f", saldo));
         System.out.println("");
     }
+
+    @Override
+    public boolean transferir(Conta contaDestino, double valor) {
+        double saldoDestino = contaDestino.getSaldo();
+        double saldoRemetente = this.getSaldo();
+
+        if (saldoRemetente >= valor && valor > 0) {
+            contaDestino.setSaldo(saldoDestino + valor);
+            this.setSaldo(saldoRemetente - valor);
+
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

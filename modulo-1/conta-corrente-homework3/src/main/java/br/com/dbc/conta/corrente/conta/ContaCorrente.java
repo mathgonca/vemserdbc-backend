@@ -83,7 +83,7 @@ public class ContaCorrente extends Conta implements Impressao {
         double saldoRemetenteComChequeEspecial = this.retornarSaldoComChequeEspecial();
         double saldoRemetente = this.getSaldo();
 
-        if (saldoRemetenteComChequeEspecial > valor && valor > 0) {
+        if (saldoRemetenteComChequeEspecial >= valor && valor > 0) {
             contaDestino.setSaldo(saldoDestino + valor);
             this.setSaldo(saldoRemetente - valor);
 
