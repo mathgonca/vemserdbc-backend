@@ -2,7 +2,7 @@
 SELECT * FROM VEM_SER.PAIS ORDER BY NOME DESC;
 
 --- Selecionar logradouro e cep dos endereços. Porém, somente os logradouros que comecem com a letra ‘a’ (maiúsculo ou minúsculo);
-SELECT LOGRADOURO, CEP FROM VEM_SER.ENDERECO WHERE UPPER(LOGRADOURO) LIKE 'a%';
+SELECT LOGRADOURO, CEP FROM VEM_SER.ENDERECO WHERE LOGRADOURO LIKE 'a%' OR LIKE 'A%';
 
 --- Selecionar todos os endereços que tenham cep com final ‘0’;
 SELECT * FROM VEM_SER.ENDERECO WHERE CEP LIKE '%0';
