@@ -7,7 +7,7 @@
 --- ativo: caracter (‘S’ = ativo, ‘N’ = não ativo)
 
 CREATE TABLE VEM_SER.ESTUDANTE (
-	id_estudante NUMBER NOT NULL,
+	id NUMBER NOT NULL,
 	nome VARCHAR2(200) NOT NULL,
 	data_nascimento DATE NOT NULL,
 	nr_matricula NUMBER(10) UNIQUE NOT NULL,
