@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "5571322f-0a4b-4b0c-bb51-482cfe5bca21",
-		"name": "PessoaAPI",
+		"_postman_id": "05b75869-ed6e-4e42-a073-b4477a28a6e2",
+		"name": "pessoa-api",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -9,7 +9,7 @@
 			"name": "pessoa",
 			"item": [
 				{
-					"name": "New Request",
+					"name": "Retornar lista de Pessoas",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -26,7 +26,31 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "Retornar Pessoa pelo nome",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/pessoa/pelo-nome?nome=Maicon",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"pessoa",
+								"pelo-nome"
+							],
+							"query": [
+								{
+									"key": "nome",
+									"value": "Maicon"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cadastrar Pessoa",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -52,7 +76,7 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "Atualizar Pessoa pelo Id",
 					"request": {
 						"method": "PUT",
 						"header": [],
@@ -79,7 +103,7 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "Deletar Pessoa pelo Id",
 					"request": {
 						"method": "DELETE",
 						"header": [],
@@ -102,7 +126,7 @@
 			"name": "contato",
 			"item": [
 				{
-					"name": "New Request",
+					"name": "Retornar lista de Contatos",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -119,7 +143,7 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "Retornar Contatos pelo Id Pessoa",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -137,7 +161,7 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "Cadastrar Contato",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -164,7 +188,7 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "Atualizar Contato pelo Id",
 					"request": {
 						"method": "PUT",
 						"header": [],
@@ -191,7 +215,7 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "Deletar Contato pelo Id",
 					"request": {
 						"method": "DELETE",
 						"header": [],
@@ -234,7 +258,7 @@
 	"variable": [
 		{
 			"key": "base_url",
-			"value": "https://back-vemserdbc.herokuapp.com"
+			"value": "localhost:8080"
 		}
 	]
 }

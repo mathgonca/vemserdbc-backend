@@ -2,34 +2,50 @@ package br.com.dbc.vemser.pessoaapi.service;
 
 import br.com.dbc.vemser.pessoaapi.entity.Contato;
 import br.com.dbc.vemser.pessoaapi.repository.ContatoRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class ContatoService {
 
-    private ContatoRepository repository;
+    private ContatoRepository contatoRepository;
 
-    public ContatoService() {
-        repository = new ContatoRepository();
+    public ContatoService(ContatoRepository contatoRepository) {
+        this.contatoRepository = contatoRepository;
     }
 
     public List<Contato> listarContatos() {
-        return repository.listarContatos();
+        return contatoRepository.listarContatos();
     }
 
     public List<Contato> listarContatoPeloIdPessoa(Integer idPessoa) {
-        return repository.listarContatoPeloIdPessoa(idPessoa);
+        return contatoRepository.listarContatoPeloIdPessoa(idPessoa);
     }
 
     public Contato cadastrarContato(Integer idPessoa, Contato contato) {
-        return repository.cadastrarContato(idPessoa, contato);
+        return contatoRepository.cadastrarContato(idPessoa, contato);
     }
 
     public Contato atualizarContato(Integer id, Contato contatoAtualizado) throws Exception {
-        return repository.atualizarContato(id, contatoAtualizado);
+        Contato contatoRecuperado = contatoRepository.listarContatos().stream()
+                .filter(contato -> contato.getIdContato().equals(id))
+                .findFirst()
+                .orElseThrow(() -> new Exception("Contato não encontrado"));
+
+        contatoRecuperado.setTipoContato(contatoAtualizado.getTipoContato());
+        contatoRecuperado.setNumero(contatoAtualizado.getNumero());
+        contatoRecuperado.setDescricao(contatoAtualizado.getDescricao());
+
+        return contatoRecuperado;
     }
 
     public void deletarContato(Integer id) throws Exception {
-        repository.deletarContato(id);
+        Contato contatoDeletado = contatoRepository.listarContatos().stream()
+                .filter(contato -> contato.getIdContato().equals(id))
+                .findFirst()
+                .orElseThrow(() -> new Exception("Contato não encontrado"));
+
+        contatoRepository.deletarContato(contatoDeletado);
     }
 }

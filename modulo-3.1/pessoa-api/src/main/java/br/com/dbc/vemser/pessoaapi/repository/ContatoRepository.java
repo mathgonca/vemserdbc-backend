@@ -3,11 +3,13 @@ package br.com.dbc.vemser.pessoaapi.repository;
 
 import br.com.dbc.vemser.pessoaapi.entity.Contato;
 import br.com.dbc.vemser.pessoaapi.entity.TipoContato;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
+@Repository
 public class ContatoRepository {
 
     private static List<Contato> listaContatos = new ArrayList<>();
@@ -31,7 +33,7 @@ public class ContatoRepository {
 
     public List<Contato> listarContatoPeloIdPessoa(Integer idPessoa) {
         return listaContatos.stream()
-                .filter(contato -> contato.getIdContato().equals(idPessoa))
+                .filter(contato -> contato.getIdPessoa().equals(idPessoa))
                 .toList();
     }
 
@@ -39,28 +41,11 @@ public class ContatoRepository {
         contato.setIdContato(COUNTER.incrementAndGet());
         contato.setIdPessoa(idPessoa);
         listaContatos.add(contato);
+
         return contato;
     }
 
-    public Contato atualizarContato(Integer id, Contato contatoAtualizado) throws Exception {
-        Contato contatoRecuperado = listaContatos.stream()
-                .filter(contato -> contato.getIdContato().equals(id))
-                .findFirst()
-                .orElseThrow(() -> new Exception("Contato não encontrado"));
-
-        contatoRecuperado.setTipoContato(contatoAtualizado.getTipoContato());
-        contatoRecuperado.setNumero(contatoAtualizado.getNumero());
-        contatoRecuperado.setDescricao(contatoAtualizado.getDescricao());
-
-        return contatoRecuperado;
-    }
-
-    public void deletarContato(Integer id) throws Exception {
-        Contato contatoDeletado = listaContatos.stream()
-                .filter(contato -> contato.getIdContato().equals(id))
-                .findFirst()
-                .orElseThrow(() -> new Exception("Contato não encontrado"));
-
-        listaContatos.remove(contatoDeletado);
+    public void deletarContato(Contato contato) {
+        listaContatos.remove(contato);
     }
 }

@@ -10,34 +10,34 @@ import java.util.List;
 @RequestMapping("/contato")
 public class ContatoController {
 
-    private ContatoService service;
+    private ContatoService contatoService;
 
-    public ContatoController() {
-        service = new ContatoService();
+    public ContatoController(ContatoService contatoService) {
+        this.contatoService = contatoService;
     }
 
     @GetMapping
     public List<Contato> listarContatos() {
-        return service.listarContatos();
+        return contatoService.listarContatos();
     }
 
     @GetMapping("/{idPessoa}")
     public List<Contato> listarContatoPeloIdPessoa(@PathVariable Integer idPessoa) {
-        return service.listarContatoPeloIdPessoa(idPessoa);
+        return contatoService.listarContatoPeloIdPessoa(idPessoa);
     }
 
     @PostMapping("/{idPessoa}")
     public Contato cadastrarContato(@PathVariable Integer idPessoa, @RequestBody Contato contato) {
-        return service.cadastrarContato(idPessoa, contato);
+        return contatoService.cadastrarContato(idPessoa, contato);
     }
 
     @PutMapping("/{id}")
     public Contato atualizarContato(@PathVariable Integer id, @RequestBody Contato contatoAtualizado) throws Exception {
-        return service.atualizarContato(id, contatoAtualizado);
+        return contatoService.atualizarContato(id, contatoAtualizado);
     }
 
     @DeleteMapping("/{id}")
     public void deletarContato(@PathVariable Integer id) throws Exception {
-        service.deletarContato(id);
+        contatoService.deletarContato(id);
     }
 }
