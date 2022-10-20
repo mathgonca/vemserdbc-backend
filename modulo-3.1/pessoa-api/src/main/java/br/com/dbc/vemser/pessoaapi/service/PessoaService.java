@@ -18,6 +18,18 @@ public class PessoaService {
     }
 
     public Pessoa cadastrarPessoa(Pessoa pessoa) throws Exception {
+        if (StringUtils.isBlank(pessoa.getNome())) {
+            throw new Exception("Nome em branco! Adicione o nome para concluir o cadastro.");
+        }
+
+        if (ObjectUtils.isEmpty(pessoa.getDataNascimento())) {
+            throw new Exception("Data de nascimento em branco! Adicione a data para concluir o cadastro");
+        }
+
+        if (StringUtils.isBlank(pessoa.getCpf()) || pessoa.getCpf().length() != 11) {
+            throw new Exception("CPF inválido! Adicione um CPF válido para concluir o cadastro");
+        }
+
         return pessoaRepository.cadastrarPessoa(pessoa);
     }
 
