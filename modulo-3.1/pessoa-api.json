@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "66a19dfd-d3ba-4f99-93ab-78395c65546a",
+		"_postman_id": "dd47f803-3149-4973-a34e-6fa95e537619",
 		"name": "pessoa-api",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -238,7 +238,61 @@
 			"name": "endereco",
 			"item": [
 				{
-					"name": "Cadastrar Endereco",
+					"name": "Listar todos Endereços",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/endereco",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"endereco"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar todos Endereço pelo Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/endereco/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"endereco",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar todos Endereços pelo Id Pessoa",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/endereco/2/pessoa",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"endereco",
+								"2",
+								"pessoa"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cadastrar Endereço",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -265,17 +319,45 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "Atualizar Endereço",
 					"request": {
-						"method": "GET",
+						"method": "PUT",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"idPessoa\": 3,\n    \"tipo\": \"RESIDENCIAL\",\n    \"logradouro\": \"Rua Sete\",\n    \"numero\": 123,\n    \"complemento\": 888,\n    \"cep\": \"92314060\",\n    \"cidade\": \"Canoas\",\n    \"estado\": \"RS\",\n    \"pais\": \"Brasil\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "{{base_url}}/endereco",
+							"raw": "{{base_url}}/endereco/1",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
-								"endereco"
+								"endereco",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletar Endereço",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/endereco/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"endereco",
+								"1"
 							]
 						}
 					},
