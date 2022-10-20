@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "05b75869-ed6e-4e42-a073-b4477a28a6e2",
+		"_postman_id": "66a19dfd-d3ba-4f99-93ab-78395c65546a",
 		"name": "pessoa-api",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -227,6 +227,55 @@
 							"path": [
 								"contato",
 								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "endereco",
+			"item": [
+				{
+					"name": "Cadastrar Endereco",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"tipo\": \"COMERCIAL\",\n    \"logradouro\": \"Rua CC\",\n    \"numero\": 123,\n    \"cep\": \"92440356\",\n    \"cidade\": \"Canoas\",\n    \"estado\": \"RS\",\n    \"pais\": \"Brasil\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/endereco/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"endereco",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/endereco",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"endereco"
 							]
 						}
 					},

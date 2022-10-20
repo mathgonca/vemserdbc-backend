@@ -12,6 +12,23 @@ public class Endereco {
     private String estado;
     private String pais;
 
+    public Endereco() {
+    }
+
+    public Endereco(Integer idEndereco, Integer idPessoa, TipoEndereco tipo, String logradouro, Integer numero,
+                    String complemento, String cep, String cidade, String estado, String pais) {
+        this.idEndereco = idEndereco;
+        this.idPessoa = idPessoa;
+        this.tipo = tipo;
+        this.logradouro = logradouro;
+        this.numero = numero;
+        this.complemento = complemento;
+        this.cep = cep;
+        this.cidade = cidade;
+        this.estado = estado;
+        this.pais = pais;
+    }
+
     public Integer getIdEndereco() {
         return idEndereco;
     }
