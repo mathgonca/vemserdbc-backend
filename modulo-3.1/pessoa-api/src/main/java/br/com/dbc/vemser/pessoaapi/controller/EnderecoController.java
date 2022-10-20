@@ -15,39 +15,35 @@ public class EnderecoController {
         this.enderecoService = enderecoService;
     }
 
-    //    GET “/endereco” : recupera todos os endereços.
     @GetMapping
     public List<Endereco> listarEnderecos() {
         return enderecoService.listarEnderecos();
     }
 
-//    GET “/endereco/{idEndereco}”: recupera o endereço específico.
     @GetMapping("/{idEndereco}")
-    public Endereco listarEnderecoPeloId(@PathVariable Integer idEndereco) {
-        return null;
+    public Endereco listarEnderecoPeloId(@PathVariable Integer idEndereco) throws Exception {
+        return enderecoService.listarEnderecoPeloId(idEndereco);
     }
 
-//    GET “/endereco/{idPessoa}/pessoa”: recupera os endereços por pessoa.
     @GetMapping("/{idPessoa}/pessoa")
-    public Endereco listarEnderecoPeloIdPessoa(@PathVariable Integer idPessoa) {
-        return null;
+    public List<Endereco> listarEnderecoPeloIdPessoa(@PathVariable Integer idPessoa) throws Exception {
+        return enderecoService.listarEnderecosPeloIdPessoa(idPessoa);
     }
 
-//    POST “/endereco/{idPessoa}”: recebe a pessoa, o endereço e cria o endereço com id da pessoa.
     @PostMapping("/{idPessoa}")
-    public Endereco cadatrarEndereco(@PathVariable Integer idPessoa, @RequestBody Endereco endereco) {
+    public Endereco cadastrarEndereco(@PathVariable Integer idPessoa, @RequestBody Endereco endereco) {
         return  enderecoService.cadastrarEndereco(idPessoa, endereco);
     }
 
 //    PUT “/endereco/{idEndereco}”: altera os dados do endereço.
     @PutMapping("/{idEndereco}")
-    public Endereco atualizarEndereco(@PathVariable Integer idEndereco, @RequestBody Endereco endereco) {
-        return null;
+    public Endereco atualizarEndereco(@PathVariable Integer idEndereco, @RequestBody Endereco endereco) throws Exception {
+        return enderecoService.atualizarEndereco(idEndereco, endereco);
     }
 
 //    DELETE “/endereco/{idEndereco}”: remove o endereço pelo id.
     @DeleteMapping("/{idEndereco}")
-    public void deletarEndereco(@PathVariable Integer idEndereco) {
-
+    public void deletarEndereco(@PathVariable Integer idEndereco) throws Exception {
+        enderecoService.deletarEndereco(idEndereco);
     }
 }

@@ -45,4 +45,10 @@ public class PessoaRepository {
                 .filter(pessoa -> pessoa.getNome().toUpperCase().contains(nome.toUpperCase()))
                 .collect(Collectors.toList());
     }
+
+    public Optional<Pessoa> listarPessoaPeloId(Integer idPessoa) {
+        return listaPessoas.stream()
+                .filter(pessoa -> pessoa.getIdPessoa().equals(idPessoa))
+                .findFirst();
+    }
 }

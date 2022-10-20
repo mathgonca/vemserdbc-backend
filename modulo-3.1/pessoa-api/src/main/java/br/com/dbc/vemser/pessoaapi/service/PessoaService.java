@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PessoaService {
@@ -61,5 +62,15 @@ public class PessoaService {
 
     public List<Pessoa> listarPessoaPeloNome(String nome) {
         return pessoaRepository.listByName(nome);
+    }
+
+    public Pessoa listarPessoaPeloId(Integer idPessoa) throws Exception {
+        Optional<Pessoa> pessoaRecuperada = pessoaRepository.listarPessoaPeloId(idPessoa);
+
+        if (pessoaRecuperada.isEmpty()){
+            throw new Exception("Pessoa não encontrada!");
+        }
+
+        return pessoaRecuperada.get();
     }
 }
