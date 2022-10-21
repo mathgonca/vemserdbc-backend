@@ -15,18 +15,7 @@ import java.time.LocalDate;
 public class Pessoa {
 
     private Integer idPessoa;
-
-    @NotNull
-    @NotEmpty
-    @NotBlank
     private String nome;
-
-    @Past
-    @NotNull
     private LocalDate dataNascimento;
-
-    @NotNull
-    @NotEmpty
-    @Size(min = 11, max = 11)
     private String cpf;
 }

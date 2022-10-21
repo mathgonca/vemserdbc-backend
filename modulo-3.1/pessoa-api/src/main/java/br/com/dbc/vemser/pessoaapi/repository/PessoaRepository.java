@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 
 @Repository
 public class PessoaRepository {
@@ -43,7 +42,7 @@ public class PessoaRepository {
     public List<Pessoa> listByName(String nome) {
         return listaPessoas.stream()
                 .filter(pessoa -> pessoa.getNome().toUpperCase().contains(nome.toUpperCase()))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public Optional<Pessoa> listarPessoaPeloId(Integer idPessoa) {
