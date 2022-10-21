@@ -1,6 +1,7 @@
 package br.com.dbc.vemser.pessoaapi.controller;
 
 import br.com.dbc.vemser.pessoaapi.entity.Endereco;
+import br.com.dbc.vemser.pessoaapi.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.pessoaapi.service.EnderecoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,18 +27,18 @@ public class EnderecoController {
     }
 
     @GetMapping("/{idEndereco}")
-    public Endereco listarEnderecoPeloId(@PathVariable Integer idEndereco) throws Exception {
+    public Endereco listarEnderecoPeloId(@PathVariable Integer idEndereco) throws RegraDeNegocioException {
         return enderecoService.listarEnderecoPeloId(idEndereco);
     }
 
     @GetMapping("/{idPessoa}/pessoa")
-    public List<Endereco> listarEnderecoPeloIdPessoa(@PathVariable Integer idPessoa) throws Exception {
+    public List<Endereco> listarEnderecoPeloIdPessoa(@PathVariable Integer idPessoa) throws RegraDeNegocioException {
         return enderecoService.listarEnderecosPeloIdPessoa(idPessoa);
     }
 
     @PostMapping("/{idPessoa}")
     public ResponseEntity<Endereco> cadastrarEndereco(@PathVariable Integer idPessoa,
-                                                      @Valid @RequestBody Endereco endereco) {
+                                                      @Valid @RequestBody Endereco endereco) throws RegraDeNegocioException {
         return new ResponseEntity<>(enderecoService.cadastrarEndereco(idPessoa, endereco), HttpStatus.OK);
     }
 
@@ -48,7 +49,7 @@ public class EnderecoController {
     }
 
     @DeleteMapping("/{idEndereco}")
-    public void deletarEndereco(@PathVariable Integer idEndereco) throws Exception {
+    public void deletarEndereco(@PathVariable Integer idEndereco) throws RegraDeNegocioException {
         enderecoService.deletarEndereco(idEndereco);
     }
 }

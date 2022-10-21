@@ -6,14 +6,18 @@ import br.com.dbc.vemser.pessoaapi.repository.ContatoRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ContatoService {
 
     private ContatoRepository contatoRepository;
 
-    public ContatoService(ContatoRepository contatoRepository) {
+    private PessoaService pessoaService;
+
+    public ContatoService(ContatoRepository contatoRepository, PessoaService pessoaService) {
         this.contatoRepository = contatoRepository;
+        this.pessoaService = pessoaService;
     }
 
     public List<Contato> listarContatos() {
@@ -24,29 +28,32 @@ public class ContatoService {
         return contatoRepository.listarContatoPeloIdPessoa(idPessoa);
     }
 
-    public Contato cadastrarContato(Integer idPessoa, Contato contato) {
+    public Contato cadastrarContato(Integer idPessoa, Contato contato) throws RegraDeNegocioException {
+         pessoaService.listarPessoaPeloId(idPessoa);
         return contatoRepository.cadastrarContato(idPessoa, contato);
     }
 
     public Contato atualizarContato(Integer id, Contato contatoAtualizado) throws RegraDeNegocioException {
-        Contato contatoRecuperado = contatoRepository.listarContatos().stream()
-                .filter(contato -> contato.getIdContato().equals(id))
-                .findFirst()
-                .orElseThrow(() -> new RegraDeNegocioException("Contato não encontrado"));
+        Optional<Contato> contatoRecuperado = contatoRepository.listarContatoPeloId(id);
 
-        contatoRecuperado.setTipoContato(contatoAtualizado.getTipoContato());
-        contatoRecuperado.setNumero(contatoAtualizado.getNumero());
-        contatoRecuperado.setDescricao(contatoAtualizado.getDescricao());
+        if(contatoRecuperado.isEmpty()) {
+            throw new RegraDeNegocioException("Contato não cadastrado!");
+        }
 
-        return contatoRecuperado;
+        contatoRecuperado.get().setTipoContato(contatoAtualizado.getTipoContato());
+        contatoRecuperado.get().setNumero(contatoAtualizado.getNumero());
+        contatoRecuperado.get().setDescricao(contatoAtualizado.getDescricao());
+
+        return contatoRecuperado.get();
     }
 
     public void deletarContato(Integer id) throws RegraDeNegocioException {
-        Contato contatoDeletado = contatoRepository.listarContatos().stream()
-                .filter(contato -> contato.getIdContato().equals(id))
-                .findFirst()
-                .orElseThrow(() -> new RegraDeNegocioException("Contato não encontrado"));
+        Optional<Contato> contatoDeletado = contatoRepository.listarContatoPeloId(id);
 
-        contatoRepository.deletarContato(contatoDeletado);
+        if(contatoDeletado.isEmpty()) {
+            throw new RegraDeNegocioException("Contato não cadastrado!");
+        }
+
+        contatoRepository.deletarContato(contatoDeletado.get());
     }
 }

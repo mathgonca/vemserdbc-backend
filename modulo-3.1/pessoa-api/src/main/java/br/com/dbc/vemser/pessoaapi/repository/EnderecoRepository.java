@@ -34,11 +34,9 @@ public class EnderecoRepository {
 
 
     public Optional<Endereco> listarEnderecoPeloId(Integer idEndereco) {
-        Optional<Endereco> enderecoRecuperado = listaEnderecos.stream()
+        return listaEnderecos.stream()
                 .filter(endereco -> endereco.getIdEndereco().equals(idEndereco))
                 .findFirst();
-
-        return enderecoRecuperado;
     }
 
     public List<Endereco> listarEnderecosPeloIdPessoa(Integer idPessoa) {

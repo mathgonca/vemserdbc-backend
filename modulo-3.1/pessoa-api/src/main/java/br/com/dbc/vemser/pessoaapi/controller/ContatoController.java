@@ -1,6 +1,7 @@
 package br.com.dbc.vemser.pessoaapi.controller;
 
 import br.com.dbc.vemser.pessoaapi.entity.Contato;
+import br.com.dbc.vemser.pessoaapi.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.pessoaapi.service.ContatoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +33,7 @@ public class ContatoController {
     }
 
     @PostMapping("/{idPessoa}")
-    public ResponseEntity<Contato> cadastrarContato(@PathVariable Integer idPessoa, @Valid @RequestBody Contato contato) {
+    public ResponseEntity<Contato> cadastrarContato(@PathVariable Integer idPessoa, @Valid @RequestBody Contato contato) throws RegraDeNegocioException {
         return new ResponseEntity<>(contatoService.cadastrarContato(idPessoa, contato), HttpStatus.OK);
     }
 

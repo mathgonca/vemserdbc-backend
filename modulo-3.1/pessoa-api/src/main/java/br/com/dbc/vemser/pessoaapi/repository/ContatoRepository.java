@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Repository
@@ -25,6 +26,12 @@ public class ContatoRepository {
                 "11129883781", "Contato familiar"));
         listaContatos.add(new Contato(COUNTER.incrementAndGet(), 2, TipoContato.RESIDENCIAL,
                 "11601384705", "Contato principal"));
+    }
+
+    public Optional<Contato> listarContatoPeloId(Integer idContato) {
+        return listaContatos.stream()
+                .filter(contato -> contato.getIdContato().equals(idContato))
+                .findFirst();
     }
 
     public List<Contato> listarContatos() {

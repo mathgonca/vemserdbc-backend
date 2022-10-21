@@ -38,7 +38,8 @@ public class EnderecoService {
         return enderecoRepository.listarEnderecosPeloIdPessoa(idPessoa);
     }
 
-    public Endereco cadastrarEndereco(Integer idPessoa, Endereco endereco) {
+    public Endereco cadastrarEndereco(Integer idPessoa, Endereco endereco) throws RegraDeNegocioException {
+        pessoaService.listarPessoaPeloId(idPessoa);
         endereco.setIdPessoa(idPessoa);
         return enderecoRepository.cadastrarEndereco(endereco);
     }
