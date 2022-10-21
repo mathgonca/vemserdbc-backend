@@ -3,22 +3,18 @@ package br.com.dbc.vemser.pessoaapi.service;
 import br.com.dbc.vemser.pessoaapi.entity.Contato;
 import br.com.dbc.vemser.pessoaapi.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.pessoaapi.repository.ContatoRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class ContatoService {
 
-    private ContatoRepository contatoRepository;
-
-    private PessoaService pessoaService;
-
-    public ContatoService(ContatoRepository contatoRepository, PessoaService pessoaService) {
-        this.contatoRepository = contatoRepository;
-        this.pessoaService = pessoaService;
-    }
+    private final ContatoRepository contatoRepository;
+    private final PessoaService pessoaService;
 
     public List<Contato> listarContatos() {
         return contatoRepository.listarContatos();

@@ -2,6 +2,7 @@ package br.com.dbc.vemser.pessoaapi.controller;
 
 import br.com.dbc.vemser.pessoaapi.entity.Pessoa;
 import br.com.dbc.vemser.pessoaapi.service.PessoaService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -11,15 +12,12 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Validated
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/pessoa")
 public class PessoaController {
 
-    private PessoaService pessoaService;
-
-    public PessoaController(PessoaService pessoaService) {
-        this.pessoaService = pessoaService;
-    }
+    private final PessoaService pessoaService;
 
     @PostMapping
     public ResponseEntity<Pessoa> cadastrarPessoa(@Valid @RequestBody Pessoa pessoa) throws Exception {

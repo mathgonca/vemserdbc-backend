@@ -3,21 +3,18 @@ package br.com.dbc.vemser.pessoaapi.service;
 import br.com.dbc.vemser.pessoaapi.entity.Endereco;
 import br.com.dbc.vemser.pessoaapi.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.pessoaapi.repository.EnderecoRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class EnderecoService {
 
-    private EnderecoRepository enderecoRepository;
-    private PessoaService pessoaService;
-
-    public EnderecoService(EnderecoRepository enderecoRepository, PessoaService pessoaService) {
-        this.enderecoRepository = enderecoRepository;
-        this.pessoaService = pessoaService;
-    }
+    private final EnderecoRepository enderecoRepository;
+    private final PessoaService pessoaService;
 
     public List<Endereco> listarEnderecos() {
         return enderecoRepository.listarEnderecos();
