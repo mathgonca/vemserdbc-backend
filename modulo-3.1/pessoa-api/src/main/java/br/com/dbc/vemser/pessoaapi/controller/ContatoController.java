@@ -2,10 +2,15 @@ package br.com.dbc.vemser.pessoaapi.controller;
 
 import br.com.dbc.vemser.pessoaapi.entity.Contato;
 import br.com.dbc.vemser.pessoaapi.service.ContatoService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
+@Validated
 @RestController
 @RequestMapping("/contato")
 public class ContatoController {
@@ -27,13 +32,13 @@ public class ContatoController {
     }
 
     @PostMapping("/{idPessoa}")
-    public Contato cadastrarContato(@PathVariable Integer idPessoa, @RequestBody Contato contato) {
-        return contatoService.cadastrarContato(idPessoa, contato);
+    public ResponseEntity<Contato> cadastrarContato(@PathVariable Integer idPessoa, @Valid @RequestBody Contato contato) {
+        return new ResponseEntity<>(contatoService.cadastrarContato(idPessoa, contato), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public Contato atualizarContato(@PathVariable Integer id, @RequestBody Contato contatoAtualizado) throws Exception {
-        return contatoService.atualizarContato(id, contatoAtualizado);
+    public ResponseEntity<Contato> atualizarContato(@PathVariable Integer id, @RequestBody Contato contatoAtualizado) throws Exception {
+        return new ResponseEntity<>(contatoService.atualizarContato(id, contatoAtualizado), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

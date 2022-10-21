@@ -1,6 +1,7 @@
 package br.com.dbc.vemser.pessoaapi.service;
 
 import br.com.dbc.vemser.pessoaapi.entity.Endereco;
+import br.com.dbc.vemser.pessoaapi.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.pessoaapi.repository.EnderecoRepository;
 import org.springframework.stereotype.Service;
 
@@ -22,17 +23,17 @@ public class EnderecoService {
         return enderecoRepository.listarEnderecos();
     }
 
-    public Endereco listarEnderecoPeloId(Integer idEndereco) throws Exception {
+    public Endereco listarEnderecoPeloId(Integer idEndereco) throws RegraDeNegocioException {
         Optional<Endereco> enderecoRecuperado = enderecoRepository.listarEnderecoPeloId(idEndereco);
 
         if(enderecoRecuperado.isEmpty()) {
-            throw new Exception("Endereço não encontrado");
+            throw new RegraDeNegocioException("Endereço não encontrado");
         }
 
         return enderecoRecuperado.get();
     }
 
-    public List<Endereco> listarEnderecosPeloIdPessoa(Integer idPessoa) throws Exception {
+    public List<Endereco> listarEnderecosPeloIdPessoa(Integer idPessoa) throws RegraDeNegocioException {
         pessoaService.listarPessoaPeloId(idPessoa);
         return enderecoRepository.listarEnderecosPeloIdPessoa(idPessoa);
     }
@@ -42,7 +43,7 @@ public class EnderecoService {
         return enderecoRepository.cadastrarEndereco(endereco);
     }
 
-    public Endereco atualizarEndereco(Integer idEndereco, Endereco endereco) throws Exception {
+    public Endereco atualizarEndereco(Integer idEndereco, Endereco endereco) throws RegraDeNegocioException {
         Endereco enderecoRecuperado = listarEnderecoPeloId(idEndereco);
 
         enderecoRecuperado.setIdPessoa(endereco.getIdPessoa());
@@ -58,7 +59,7 @@ public class EnderecoService {
         return enderecoRecuperado;
     }
 
-    public void deletarEndereco(Integer idEndereco) throws Exception {
+    public void deletarEndereco(Integer idEndereco) throws RegraDeNegocioException {
         Endereco endereco = listarEnderecoPeloId(idEndereco);
         enderecoRepository.deletarEndereco(endereco);
     }

@@ -2,10 +2,15 @@ package br.com.dbc.vemser.pessoaapi.controller;
 
 import br.com.dbc.vemser.pessoaapi.entity.Endereco;
 import br.com.dbc.vemser.pessoaapi.service.EnderecoService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
+@Validated
 @RestController
 @RequestMapping("/endereco")
 public class EnderecoController {
@@ -31,17 +36,17 @@ public class EnderecoController {
     }
 
     @PostMapping("/{idPessoa}")
-    public Endereco cadastrarEndereco(@PathVariable Integer idPessoa, @RequestBody Endereco endereco) {
-        return  enderecoService.cadastrarEndereco(idPessoa, endereco);
+    public ResponseEntity<Endereco> cadastrarEndereco(@PathVariable Integer idPessoa,
+                                                      @Valid @RequestBody Endereco endereco) {
+        return new ResponseEntity<>(enderecoService.cadastrarEndereco(idPessoa, endereco), HttpStatus.OK);
     }
 
-//    PUT “/endereco/{idEndereco}”: altera os dados do endereço.
     @PutMapping("/{idEndereco}")
-    public Endereco atualizarEndereco(@PathVariable Integer idEndereco, @RequestBody Endereco endereco) throws Exception {
-        return enderecoService.atualizarEndereco(idEndereco, endereco);
+    public ResponseEntity<Endereco> atualizarEndereco(@PathVariable Integer idEndereco,
+                                                      @Valid @RequestBody Endereco endereco) throws Exception {
+        return new ResponseEntity<>(enderecoService.atualizarEndereco(idEndereco, endereco), HttpStatus.OK);
     }
 
-//    DELETE “/endereco/{idEndereco}”: remove o endereço pelo id.
     @DeleteMapping("/{idEndereco}")
     public void deletarEndereco(@PathVariable Integer idEndereco) throws Exception {
         enderecoService.deletarEndereco(idEndereco);
