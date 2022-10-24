@@ -17,10 +17,13 @@ import java.util.Optional;
 public class PessoaService {
 
     private final PessoaRepository pessoaRepository;
+    private final EmailService emailService;
     private final ObjectMapper objectMapper;
 
     public PessoaDTO cadastrarPessoa(PessoaCreateDTO pessoaCreateDTO) {
         Pessoa pessoa = objectMapper.convertValue(pessoaCreateDTO, Pessoa.class);
+
+
         return objectMapper.convertValue(pessoaRepository.cadastrarPessoa(pessoa), PessoaDTO.class);
     }
 

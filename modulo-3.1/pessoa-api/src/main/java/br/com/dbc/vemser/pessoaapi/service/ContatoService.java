@@ -41,28 +41,27 @@ public class ContatoService {
         return objectMapper.convertValue(contato, ContatoDTO.class);
     }
 
-    public ContatoDTO atualizarContato(Integer id, ContatoCreateDTO contatoCreateDTO) throws RegraDeNegocioException {
-        Contato contatoRecuperado = contatoRepository.listarContatoPeloId(id).stream()
+    public Contato listarContatoPeloId(Integer id) throws RegraDeNegocioException {
+        return contatoRepository.listarContatos().stream()
                 .filter(contato -> contato.getIdContato().equals(id))
                 .findFirst()
                 .orElseThrow(() -> new RegraDeNegocioException("Contato não encontrado"));
+    }
+
+    public ContatoDTO atualizarContato(Integer id, ContatoCreateDTO contatoCreateDTO) throws RegraDeNegocioException {
+        Contato contatoRecuperado = listarContatoPeloId(id);
 
         contatoRecuperado.setTipoContato(contatoCreateDTO.getTipoContato());
         contatoRecuperado.setNumero(contatoCreateDTO.getNumero());
         contatoRecuperado.setDescricao(contatoCreateDTO.getDescricao());
 
-        Contato contatoAtualizado = contatoRepository.listarContatoPeloId(id).get();
+        Contato contatoAtualizado = listarContatoPeloId(id);
 
         return objectMapper.convertValue(contatoAtualizado, ContatoDTO.class);
     }
 
     public void deletarContato(Integer id) throws RegraDeNegocioException {
-        Optional<Contato> contatoDeletado = contatoRepository.listarContatoPeloId(id);
-
-        if (contatoDeletado.isEmpty()) {
-            throw new RegraDeNegocioException("Contato não encontrado");
-        }
-
-        contatoRepository.deletarContato(contatoDeletado.get());
+        Contato contatoDeletado = listarContatoPeloId(id);
+        contatoRepository.deletarContato(contatoDeletado);
     }
 }

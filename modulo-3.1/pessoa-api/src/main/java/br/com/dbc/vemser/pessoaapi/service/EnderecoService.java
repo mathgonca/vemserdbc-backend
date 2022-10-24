@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -25,21 +24,6 @@ public class EnderecoService {
         return enderecoList.stream()
                 .map(endereco -> objectMapper.convertValue(endereco, EnderecoDTO.class))
                 .toList();
-    }
-
-    public Endereco listarEnderecoPeloId(Integer idEndereco) throws RegraDeNegocioException {
-        Optional<Endereco> enderecoRecuperado = enderecoRepository.listarEnderecoPeloId(idEndereco);
-
-        if (enderecoRecuperado.isEmpty()) {
-            throw new RegraDeNegocioException("Endereço não encontrado");
-        }
-
-        return enderecoRecuperado.get();
-    }
-
-    public EnderecoDTO listarEnderecoDtoPeloId(Integer idEndereco) throws RegraDeNegocioException {
-        Endereco endereco = listarEnderecoPeloId(idEndereco);
-        return objectMapper.convertValue(endereco, EnderecoDTO.class);
     }
 
     public List<EnderecoDTO> listarEnderecosPeloIdPessoa(Integer idPessoa) throws RegraDeNegocioException {
@@ -59,11 +43,20 @@ public class EnderecoService {
         return objectMapper.convertValue(enderecoRepository.cadastrarEndereco(endereco), EnderecoDTO.class);
     }
 
-    public EnderecoDTO atualizarEndereco(Integer idEndereco, EnderecoCreateDTO enderecoCreateDTO) throws RegraDeNegocioException {
-        Endereco enderecoRecuperado = enderecoRepository.listarEnderecos().stream()
+    public Endereco listarEnderecoPeloId(Integer idEndereco) throws RegraDeNegocioException {
+        return enderecoRepository.listarEnderecos().stream()
                 .filter(endereco -> endereco.getIdEndereco().equals(idEndereco))
                 .findFirst()
-                .orElseThrow(() -> new RegraDeNegocioException("Enreço não encontrado"));
+                .orElseThrow(() -> new RegraDeNegocioException("Endereço não encontrado"));
+    }
+
+    public EnderecoDTO listarEnderecoDtoPeloId(Integer idEndereco) throws RegraDeNegocioException {
+        Endereco endereco = listarEnderecoPeloId(idEndereco);
+        return objectMapper.convertValue(endereco, EnderecoDTO.class);
+    }
+
+    public EnderecoDTO atualizarEndereco(Integer idEndereco, EnderecoCreateDTO enderecoCreateDTO) throws RegraDeNegocioException {
+        Endereco enderecoRecuperado = listarEnderecoPeloId(idEndereco);
 
         enderecoRecuperado.setIdEndereco(idEndereco);
         enderecoRecuperado.setIdPessoa(enderecoCreateDTO.getIdPessoa());

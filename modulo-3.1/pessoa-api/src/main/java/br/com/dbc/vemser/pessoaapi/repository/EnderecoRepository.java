@@ -32,13 +32,6 @@ public class EnderecoRepository {
         return listaEnderecos;
     }
 
-
-    public Optional<Endereco> listarEnderecoPeloId(Integer idEndereco) {
-        return listaEnderecos.stream()
-                .filter(endereco -> endereco.getIdEndereco().equals(idEndereco))
-                .findFirst();
-    }
-
     public List<Endereco> listarEnderecosPeloIdPessoa(Integer idPessoa) {
         return listaEnderecos.stream()
                 .filter(endereco -> endereco.getIdPessoa().equals(idPessoa))

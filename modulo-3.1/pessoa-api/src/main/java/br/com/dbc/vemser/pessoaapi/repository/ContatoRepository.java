@@ -28,12 +28,6 @@ public class ContatoRepository {
                 "11601384705", "Contato principal"));
     }
 
-    public Optional<Contato> listarContatoPeloId(Integer idContato) {
-        return listaContatos.stream()
-                .filter(contato -> contato.getIdContato().equals(idContato))
-                .findFirst();
-    }
-
     public List<Contato> listarContatos() {
         return listaContatos;
     }
