@@ -1,5 +1,6 @@
 package br.com.dbc.vemser.pessoaapi.service;
 
+import br.com.dbc.vemser.pessoaapi.entity.Endereco;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import lombok.RequiredArgsConstructor;
@@ -61,6 +62,52 @@ public class EmailService {
         message.setText("Olá" + nome + "\nSeus dados foram atualizados no nosso sistema" +
                 "\nQualquer dúvida é só contatar o suporte pelo e-mail " + from +
                 "\nAtt,\nSistema.");
+        emailSender.send(message);
+    }
+
+    public void mandarEmailCadastroEndereco(String nome, String email, Endereco endereco) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom(from);
+        message.setTo(email);
+        message.setSubject("Endereço Cadastrado com Sucesso");
+        message.setText("Olá" + nome + "\nUm novo endereço foi cadastrado na sua conta"+
+                "\nId: " + endereco.getIdEndereco() +
+                "\nLogradouro: " + endereco.getLogradouro() +
+                "\nNúmero: " + endereco.getNumero() + " Complemento: " + endereco.getComplemento() +
+                "\nCEP: " + endereco.getCep() +
+                "\nCidade: " + endereco.getCidade() + " Estado: " + endereco.getEstado() +
+                "\nQualquer dúvida é só contatar o suporte pelo e-mail " + from +
+                "\nAtt,\nSistema.");
+
+        emailSender.send(message);
+    }
+
+    public void mandarEmailAtualizacaoEndereco(String nome, String email, Endereco endereco) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom(from);
+        message.setTo(email);
+        message.setSubject("Endereço Cadastrado com Sucesso");
+        message.setText("Olá" + nome + "\nSeu endereço foi atualizado"+
+                "\nId: " + endereco.getIdEndereco() +
+                "\nLogradouro: " + endereco.getLogradouro() +
+                "\nNúmero: " + endereco.getNumero() + " Complemento: " + endereco.getComplemento() +
+                "\nCEP: " + endereco.getCep() +
+                "\nCidade: " + endereco.getCidade() + " Estado: " + endereco.getEstado() +
+                "\nQualquer dúvida é só contatar o suporte pelo e-mail " + from +
+                "\nAtt,\nSistema.");
+
+        emailSender.send(message);
+    }
+
+    public void mandarEmailDeletarEndereco(String nome, String email, Integer idEndereco) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom(from);
+        message.setTo(email);
+        message.setSubject("Endereço Deletado com Sucesso");
+        message.setText("Olá" + nome + "\nSeu endereço de Id: " + idEndereco + "foi removido" +
+                "\nQualquer dúvida é só contatar o suporte pelo e-mail " + from +
+                "\nAtt,\nSistema.");
+
         emailSender.send(message);
     }
 
