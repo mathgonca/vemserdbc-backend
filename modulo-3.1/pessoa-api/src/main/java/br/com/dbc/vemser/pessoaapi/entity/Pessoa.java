@@ -18,4 +18,12 @@ public class Pessoa {
     private String nome;
     private LocalDate dataNascimento;
     private String cpf;
+    private String email;
+
+    public Pessoa(Integer idPessoa, String nome, LocalDate dataNascimento, String cpf) {
+        this.idPessoa = idPessoa;
+        this.nome = nome;
+        this.dataNascimento = dataNascimento;
+        this.cpf = cpf;
+    }
 }

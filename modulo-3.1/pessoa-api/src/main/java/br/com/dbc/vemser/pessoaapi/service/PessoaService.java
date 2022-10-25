@@ -6,9 +6,11 @@ import br.com.dbc.vemser.pessoaapi.entity.Pessoa;
 import br.com.dbc.vemser.pessoaapi.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.pessoaapi.repository.PessoaRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import freemarker.template.TemplateException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,11 +22,13 @@ public class PessoaService {
     private final EmailService emailService;
     private final ObjectMapper objectMapper;
 
-    public PessoaDTO cadastrarPessoa(PessoaCreateDTO pessoaCreateDTO) {
+    public PessoaDTO cadastrarPessoa(PessoaCreateDTO pessoaCreateDTO) throws TemplateException, IOException {
         Pessoa pessoa = objectMapper.convertValue(pessoaCreateDTO, Pessoa.class);
 
+        PessoaDTO pessoaCadastrada = objectMapper.convertValue(pessoaRepository.cadastrarPessoa(pessoa), PessoaDTO.class);
+        emailService.mandarEmailCadastroPessoa(pessoaCadastrada.getNome(), pessoaCadastrada.getIdPessoa(), pessoaCadastrada.getEmail());
 
-        return objectMapper.convertValue(pessoaRepository.cadastrarPessoa(pessoa), PessoaDTO.class);
+        return pessoaCadastrada;
     }
 
     public List<PessoaDTO> listarPessoas() {
@@ -44,8 +48,11 @@ public class PessoaService {
         pessoaRecuperada.setCpf(pessoaAtualizar.getCpf());
         pessoaRecuperada.setNome(pessoaAtualizar.getNome());
         pessoaRecuperada.setDataNascimento(pessoaAtualizar.getDataNascimento());
+        pessoaRecuperada.setEmail(pessoaAtualizar.getEmail());
 
         Pessoa pessoaAtualizada = listarPessoaPeloId(id);
+
+        emailService.mandarEmailAtualizacaoPessoa(pessoaAtualizar.getNome(), pessoaAtualizar.getEmail());
 
         return objectMapper.convertValue(pessoaAtualizada, PessoaDTO.class);
     }

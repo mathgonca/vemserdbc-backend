@@ -40,6 +40,30 @@ public class EmailService {
         emailSender.send(message);
     }
 
+    public void mandarEmailCadastroPessoa(String nome, Integer id, String email) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom(from);
+        message.setTo(TO);
+        message.setSubject("Boas vindas!");
+        message.setText("Olá " + nome +
+                "\nEstamos felizes em ter você em nosso sistema :)" +
+                "\nSeu cadastro foi realizado com sucesso, seu identificador é " + id + "." +
+                "\nQualquer dúvida é só contatar o suporte pelo e-mail " + from +
+                "\nAtt,\nSistema.");
+        emailSender.send(message);
+    }
+
+    public void mandarEmailAtualizacaoPessoa(String nome, String email) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom(from);
+        message.setTo(email);
+        message.setSubject("Cadastro Atualizado com Sucesso");
+        message.setText("Olá" + nome + "\nSeus dados foram atualizados no nosso sistema" +
+                "\nQualquer dúvida é só contatar o suporte pelo e-mail " + from +
+                "\nAtt,\nSistema.");
+        emailSender.send(message);
+    }
+
     public void sendWithAttachment() throws MessagingException {
         MimeMessage message = emailSender.createMimeMessage();
 

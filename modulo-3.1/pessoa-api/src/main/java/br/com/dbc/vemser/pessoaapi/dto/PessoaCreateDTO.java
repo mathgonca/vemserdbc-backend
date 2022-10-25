@@ -21,4 +21,5 @@ public class PessoaCreateDTO {
     @NotEmpty
     @Size(min = 11, max = 11)
     private String cpf;
+    private String email;
 }
