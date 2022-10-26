@@ -70,7 +70,7 @@ public class EmailService {
         message.setFrom(from);
         message.setTo(email);
         message.setSubject("Endereço Cadastrado com Sucesso");
-        message.setText("Olá" + nome + "\nUm novo endereço foi cadastrado na sua conta"+
+        message.setText("Olá " + nome + "\nUm novo endereço foi cadastrado na sua conta"+
                 "\nId: " + endereco.getIdEndereco() +
                 "\nLogradouro: " + endereco.getLogradouro() +
                 "\nNúmero: " + endereco.getNumero() + " Complemento: " + endereco.getComplemento() +
@@ -86,8 +86,8 @@ public class EmailService {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(from);
         message.setTo(email);
-        message.setSubject("Endereço Cadastrado com Sucesso");
-        message.setText("Olá" + nome + "\nSeu endereço foi atualizado"+
+        message.setSubject("Endereço Atualizado com Sucesso");
+        message.setText("Olá " + nome + "\nSeu endereço foi atualizado"+
                 "\nId: " + endereco.getIdEndereco() +
                 "\nLogradouro: " + endereco.getLogradouro() +
                 "\nNúmero: " + endereco.getNumero() + " Complemento: " + endereco.getComplemento() +
@@ -104,7 +104,7 @@ public class EmailService {
         message.setFrom(from);
         message.setTo(email);
         message.setSubject("Endereço Deletado com Sucesso");
-        message.setText("Olá" + nome + "\nSeu endereço de Id: " + idEndereco + "foi removido" +
+        message.setText("Olá " + nome + "\nSeu endereço de Id: " + idEndereco + " foi removido" +
                 "\nQualquer dúvida é só contatar o suporte pelo e-mail " + from +
                 "\nAtt,\nSistema.");
 
