@@ -6,6 +6,8 @@ import br.com.dbc.vemser.pessoaapi.entity.Endereco;
 import br.com.dbc.vemser.pessoaapi.entity.Pessoa;
 import br.com.dbc.vemser.pessoaapi.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.pessoaapi.repository.EnderecoRepository;
+import br.com.dbc.vemser.pessoaapi.service.enums.TipoAcao;
+import br.com.dbc.vemser.pessoaapi.service.enums.TipoEntidade;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -43,7 +45,7 @@ public class EnderecoService {
         endereco.setIdPessoa(idPessoa);
         Endereco enderecoCadastrado = enderecoRepository.cadastrarEndereco(endereco);
 
-        emailService.mandarEmailCadastroEndereco(pessoa.getNome(), pessoa.getEmail(), enderecoCadastrado);
+        emailService.mandarEmailAcaoCadastro(pessoa.getNome(), pessoa.getEmail(), TipoEntidade.ENDERECO, TipoAcao.CADASTRAR);
 
         return objectMapper.convertValue(enderecoCadastrado, EnderecoDTO.class);
     }
@@ -63,8 +65,6 @@ public class EnderecoService {
     public EnderecoDTO atualizarEndereco(Integer idEndereco, EnderecoCreateDTO enderecoCreateDTO) throws RegraDeNegocioException {
         Endereco enderecoRecuperado = listarEnderecoPeloId(idEndereco);
 
-        Pessoa pessoa = pessoaService.listarPessoaPeloId(enderecoCreateDTO.getIdPessoa());
-
         enderecoRecuperado.setIdEndereco(idEndereco);
         enderecoRecuperado.setIdPessoa(enderecoCreateDTO.getIdPessoa());
         enderecoRecuperado.setTipo(enderecoCreateDTO.getTipo());
@@ -78,7 +78,8 @@ public class EnderecoService {
 
         Endereco enderecoAtualizado = listarEnderecoPeloId(idEndereco);
 
-        emailService.mandarEmailAtualizacaoEndereco(pessoa.getNome(), pessoa.getEmail(), enderecoAtualizado);
+        Pessoa pessoa = pessoaService.listarPessoaPeloId(enderecoAtualizado.getIdPessoa());
+        emailService.mandarEmailAcaoCadastro(pessoa.getNome(), pessoa.getEmail(), TipoEntidade.ENDERECO, TipoAcao.ATUALIZAR);
 
         return objectMapper.convertValue(enderecoAtualizado, EnderecoDTO.class);
     }
@@ -89,6 +90,6 @@ public class EnderecoService {
 
         enderecoRepository.deletarEndereco(endereco);
 
-        emailService.mandarEmailDeletarEndereco(pessoa.getNome(), pessoa.getEmail(), idEndereco);
+        emailService.mandarEmailAcaoCadastro(pessoa.getNome(), pessoa.getEmail(), TipoEntidade.ENDERECO, TipoAcao.DELETAR);
     }
 }

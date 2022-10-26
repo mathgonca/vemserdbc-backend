@@ -1,6 +1,9 @@
 package br.com.dbc.vemser.pessoaapi.service;
 
 import br.com.dbc.vemser.pessoaapi.entity.Endereco;
+import br.com.dbc.vemser.pessoaapi.entity.Pessoa;
+import br.com.dbc.vemser.pessoaapi.service.enums.TipoAcao;
+import br.com.dbc.vemser.pessoaapi.service.enums.TipoEntidade;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import lombok.RequiredArgsConstructor;
@@ -41,74 +44,60 @@ public class EmailService {
         emailSender.send(message);
     }
 
-    public void mandarEmailCadastroPessoa(String nome, Integer id, String email) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom(from);
-        message.setTo(TO);
-        message.setSubject("Boas vindas!");
-        message.setText("Olá " + nome +
-                "\nEstamos felizes em ter você em nosso sistema :)" +
-                "\nSeu cadastro foi realizado com sucesso, seu identificador é " + id + "." +
-                "\nQualquer dúvida é só contatar o suporte pelo e-mail " + from +
-                "\nAtt,\nSistema.");
-        emailSender.send(message);
+    public void sendEmailCadastroPessoa(String nome, Integer id, String email) {
+        MimeMessage mimeMessage = emailSender.createMimeMessage();
+        try {
+
+            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
+
+            mimeMessageHelper.setFrom(from);
+            mimeMessageHelper.setTo(email);
+            mimeMessageHelper.setSubject("Boas vindas!");
+            mimeMessageHelper.setText(getContentCadastroPessoaTemplate(nome, id), true);
+
+            emailSender.send(mimeMessageHelper.getMimeMessage());
+        } catch (MessagingException | IOException | TemplateException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void mandarEmailAtualizacaoPessoa(String nome, String email) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom(from);
-        message.setTo(email);
-        message.setSubject("Cadastro Atualizado com Sucesso");
-        message.setText("Olá" + nome + "\nSeus dados foram atualizados no nosso sistema" +
-                "\nQualquer dúvida é só contatar o suporte pelo e-mail " + from +
-                "\nAtt,\nSistema.");
-        emailSender.send(message);
+    public String getContentCadastroPessoaTemplate(String nome, Integer id) throws IOException, TemplateException {
+        Map<String, Object> dados = new HashMap<>();
+        dados.put("nome", nome);
+        dados.put("id", id);
+        dados.put("email", from);
+        Template template = fmConfiguration.getTemplate("cadastro-pessoa-email-template.ftl");
+        String html = FreeMarkerTemplateUtils.processTemplateIntoString(template, dados);
+        return html;
     }
 
-    public void mandarEmailCadastroEndereco(String nome, String email, Endereco endereco) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom(from);
-        message.setTo(email);
-        message.setSubject("Endereço Cadastrado com Sucesso");
-        message.setText("Olá " + nome + "\nUm novo endereço foi cadastrado na sua conta"+
-                "\nId: " + endereco.getIdEndereco() +
-                "\nLogradouro: " + endereco.getLogradouro() +
-                "\nNúmero: " + endereco.getNumero() + " Complemento: " + endereco.getComplemento() +
-                "\nCEP: " + endereco.getCep() +
-                "\nCidade: " + endereco.getCidade() + " Estado: " + endereco.getEstado() +
-                "\nQualquer dúvida é só contatar o suporte pelo e-mail " + from +
-                "\nAtt,\nSistema.");
+    public void mandarEmailAcaoCadastro(String nome, String email, TipoEntidade tipoEntidade, TipoAcao tipoAcao) {
+        MimeMessage mimeMessage = emailSender.createMimeMessage();
+        try {
+            String assunto = tipoEntidade.getDescricao() + " " + tipoAcao.getDescricao() + " com Sucesso";
 
-        emailSender.send(message);
+            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
+
+            mimeMessageHelper.setFrom(from);
+            mimeMessageHelper.setTo(email);
+            mimeMessageHelper.setSubject(assunto);
+            mimeMessageHelper.setText(getContentAcaoCadastroTemplate(nome, tipoEntidade, tipoAcao), true);
+
+            emailSender.send(mimeMessageHelper.getMimeMessage());
+        } catch (MessagingException | IOException | TemplateException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void mandarEmailAtualizacaoEndereco(String nome, String email, Endereco endereco) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom(from);
-        message.setTo(email);
-        message.setSubject("Endereço Atualizado com Sucesso");
-        message.setText("Olá " + nome + "\nSeu endereço foi atualizado"+
-                "\nId: " + endereco.getIdEndereco() +
-                "\nLogradouro: " + endereco.getLogradouro() +
-                "\nNúmero: " + endereco.getNumero() + " Complemento: " + endereco.getComplemento() +
-                "\nCEP: " + endereco.getCep() +
-                "\nCidade: " + endereco.getCidade() + " Estado: " + endereco.getEstado() +
-                "\nQualquer dúvida é só contatar o suporte pelo e-mail " + from +
-                "\nAtt,\nSistema.");
-
-        emailSender.send(message);
-    }
-
-    public void mandarEmailDeletarEndereco(String nome, String email, Integer idEndereco) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom(from);
-        message.setTo(email);
-        message.setSubject("Endereço Deletado com Sucesso");
-        message.setText("Olá " + nome + "\nSeu endereço de Id: " + idEndereco + " foi removido" +
-                "\nQualquer dúvida é só contatar o suporte pelo e-mail " + from +
-                "\nAtt,\nSistema.");
-
-        emailSender.send(message);
+    public String getContentAcaoCadastroTemplate(String nome, TipoEntidade tipoEntidade, TipoAcao tipoAcao) throws IOException, TemplateException {
+        Map<String, Object> dados = new HashMap<>();
+        dados.put("nome", nome);
+        dados.put("email", from);
+        dados.put("tipoEntidade", tipoEntidade.getDescricao());
+        dados.put("tipoAcao", tipoAcao.getDescricao());
+        Template template = fmConfiguration.getTemplate("acao-cadastro-email-template.ftl");
+        String html = FreeMarkerTemplateUtils.processTemplateIntoString(template, dados);
+        return html;
     }
 
     public void sendWithAttachment() throws MessagingException {

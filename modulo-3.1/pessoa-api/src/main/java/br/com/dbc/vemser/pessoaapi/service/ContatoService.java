@@ -3,8 +3,11 @@ package br.com.dbc.vemser.pessoaapi.service;
 import br.com.dbc.vemser.pessoaapi.dto.ContatoCreateDTO;
 import br.com.dbc.vemser.pessoaapi.dto.ContatoDTO;
 import br.com.dbc.vemser.pessoaapi.entity.Contato;
+import br.com.dbc.vemser.pessoaapi.entity.Pessoa;
 import br.com.dbc.vemser.pessoaapi.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.pessoaapi.repository.ContatoRepository;
+import br.com.dbc.vemser.pessoaapi.service.enums.TipoAcao;
+import br.com.dbc.vemser.pessoaapi.service.enums.TipoEntidade;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,6 +21,7 @@ public class ContatoService {
 
     private final ContatoRepository contatoRepository;
     private final PessoaService pessoaService;
+    private final EmailService emailService;
     private final ObjectMapper objectMapper;
 
     public List<ContatoDTO> listarContatos() {
@@ -33,10 +37,12 @@ public class ContatoService {
     }
 
     public ContatoDTO cadastrarContato(Integer idPessoa, ContatoCreateDTO contatoCreateDTO) throws RegraDeNegocioException {
-        pessoaService.listarPessoaPeloId(idPessoa);
+        Pessoa pessoa = pessoaService.listarPessoaPeloId(idPessoa);
 
         Contato contatoCadastro = objectMapper.convertValue(contatoCreateDTO, Contato.class);
         Contato contato = contatoRepository.cadastrarContato(idPessoa, contatoCadastro);
+
+        emailService.mandarEmailAcaoCadastro(pessoa.getNome(), pessoa.getEmail(), TipoEntidade.CONTATO, TipoAcao.CADASTRAR);
 
         return objectMapper.convertValue(contato, ContatoDTO.class);
     }
@@ -57,11 +63,17 @@ public class ContatoService {
 
         Contato contatoAtualizado = listarContatoPeloId(id);
 
+        Pessoa pessoa = pessoaService.listarPessoaPeloId(contatoAtualizado.getIdPessoa());
+        emailService.mandarEmailAcaoCadastro(pessoa.getNome(), pessoa.getEmail(), TipoEntidade.CONTATO, TipoAcao.ATUALIZAR);
+
         return objectMapper.convertValue(contatoAtualizado, ContatoDTO.class);
     }
 
     public void deletarContato(Integer id) throws RegraDeNegocioException {
         Contato contatoDeletado = listarContatoPeloId(id);
         contatoRepository.deletarContato(contatoDeletado);
+
+        Pessoa pessoa = pessoaService.listarPessoaPeloId(contatoDeletado.getIdPessoa());
+        emailService.mandarEmailAcaoCadastro(pessoa.getNome(), pessoa.getEmail(), TipoEntidade.CONTATO, TipoAcao.DELETAR);
     }
 }

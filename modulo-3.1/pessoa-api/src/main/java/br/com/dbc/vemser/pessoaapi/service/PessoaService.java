@@ -5,6 +5,8 @@ import br.com.dbc.vemser.pessoaapi.dto.PessoaDTO;
 import br.com.dbc.vemser.pessoaapi.entity.Pessoa;
 import br.com.dbc.vemser.pessoaapi.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.pessoaapi.repository.PessoaRepository;
+import br.com.dbc.vemser.pessoaapi.service.enums.TipoAcao;
+import br.com.dbc.vemser.pessoaapi.service.enums.TipoEntidade;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import freemarker.template.TemplateException;
 import lombok.RequiredArgsConstructor;
@@ -26,8 +28,7 @@ public class PessoaService {
         Pessoa pessoa = objectMapper.convertValue(pessoaCreateDTO, Pessoa.class);
 
         PessoaDTO pessoaCadastrada = objectMapper.convertValue(pessoaRepository.cadastrarPessoa(pessoa), PessoaDTO.class);
-        emailService.mandarEmailCadastroPessoa(pessoaCadastrada.getNome(), pessoaCadastrada.getIdPessoa(), pessoaCadastrada.getEmail());
-
+        emailService.sendEmailCadastroPessoa(pessoaCadastrada.getNome(), pessoaCadastrada.getIdPessoa(), pessoaCadastrada.getEmail());
         return pessoaCadastrada;
     }
 
@@ -52,7 +53,8 @@ public class PessoaService {
 
         Pessoa pessoaAtualizada = listarPessoaPeloId(id);
 
-        emailService.mandarEmailAtualizacaoPessoa(pessoaAtualizar.getNome(), pessoaAtualizar.getEmail());
+        emailService.mandarEmailAcaoCadastro(pessoaAtualizar.getNome(), pessoaAtualizar.getEmail(),
+                TipoEntidade.PESSOA, TipoAcao.ATUALIZAR);
 
         return objectMapper.convertValue(pessoaAtualizada, PessoaDTO.class);
     }
@@ -60,6 +62,9 @@ public class PessoaService {
     public void deletarPessoa(Integer id) throws RegraDeNegocioException {
         Pessoa pessoaRecuperada = listarPessoaPeloId(id);
         pessoaRepository.deletarPessoa(pessoaRecuperada);
+
+        emailService.mandarEmailAcaoCadastro(pessoaRecuperada.getNome(), pessoaRecuperada.getEmail(),
+                TipoEntidade.PESSOA, TipoAcao.DELETAR);
     }
 
     public List<PessoaDTO> listarPessoaPeloNome(String nome) {
