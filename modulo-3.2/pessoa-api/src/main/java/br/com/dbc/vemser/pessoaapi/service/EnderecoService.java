@@ -56,21 +56,12 @@ public class EnderecoService {
     }
 
     public EnderecoDTO atualizarEndereco(Integer idEndereco, EnderecoCreateDTO enderecoCreateDTO) throws RegraDeNegocioException {
-        EnderecoEntity enderecoEntityRecuperado = listarEnderecoPeloId(idEndereco);
+        listarEnderecoPeloId(idEndereco);
 
-        enderecoEntityRecuperado.setIdEndereco(idEndereco);
-        enderecoEntityRecuperado.setTipo(enderecoCreateDTO.getTipo());
-        enderecoEntityRecuperado.setLogradouro(enderecoCreateDTO.getLogradouro());
-        enderecoEntityRecuperado.setNumero(enderecoCreateDTO.getNumero());
-        enderecoEntityRecuperado.setComplemento(enderecoCreateDTO.getComplemento());
-        enderecoEntityRecuperado.setCep(enderecoCreateDTO.getCep());
-        enderecoEntityRecuperado.setCidade(enderecoCreateDTO.getCidade());
-        enderecoEntityRecuperado.setEstado(enderecoCreateDTO.getEstado());
-        enderecoEntityRecuperado.setPais(enderecoCreateDTO.getPais());
+        EnderecoEntity enderecoAtualizado = objectMapper.convertValue(enderecoCreateDTO, EnderecoEntity.class);
+        enderecoAtualizado.setIdEndereco(idEndereco);
 
-        EnderecoEntity enderecoEntityAtualizado = listarEnderecoPeloId(idEndereco);
-
-        return objectMapper.convertValue(enderecoEntityAtualizado, EnderecoDTO.class);
+        return objectMapper.convertValue(enderecoRepository.save(enderecoAtualizado), EnderecoDTO.class);
     }
 
     public void deletarEndereco(Integer idEndereco) throws RegraDeNegocioException {
