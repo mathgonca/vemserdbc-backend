@@ -19,9 +19,6 @@ public class ContatoEntity {
     @SequenceGenerator(name = "CONTATO_SEQ", sequenceName = "seq_contato", allocationSize = 1)
     private Integer idContato;
 
-    @Column(name = "id_pessoa")
-    private Integer idPessoa;
-
     @Column(name = "tipo")
     private TipoContato tipoContato;
 
@@ -30,4 +27,8 @@ public class ContatoEntity {
 
     @Column(name = "descricao")
     private String descricao;
+
+    @ManyToOne
+    @JoinColumn(name = "id_pessoa", referencedColumnName = "id_pessoa")
+    private PessoaEntity pessoa;
 }

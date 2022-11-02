@@ -27,6 +27,11 @@ public class ContatoControllerImpl implements ContatoController {
         return contatoService.listarContatos();
     }
 
+    @GetMapping("/{idPessoa}")
+    public List<ContatoDTO> listarContatosPeloIdPessoa(@PathVariable Integer idPessoa) {
+        return contatoService.listarContatoPeloIdPessoa(idPessoa);
+    }
+
     @PostMapping("/{idPessoa}")
     public ResponseEntity<ContatoDTO> cadastrarContato(@PathVariable Integer idPessoa,
                                                        @Valid @RequestBody ContatoCreateDTO contato) throws RegraDeNegocioException {
