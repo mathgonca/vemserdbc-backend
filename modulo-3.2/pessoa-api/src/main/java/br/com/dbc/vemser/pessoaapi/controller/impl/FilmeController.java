@@ -1,13 +1,11 @@
 package br.com.dbc.vemser.pessoaapi.controller.impl;
 
-import br.com.dbc.vemser.pessoaapi.entity.FilmeEntity;
-import br.com.dbc.vemser.pessoaapi.entity.PessoaFilmeEntity;
-import br.com.dbc.vemser.pessoaapi.repository.FilmeRepository;
-import br.com.dbc.vemser.pessoaapi.repository.PessoaFilmeRepository;
+import br.com.dbc.vemser.pessoaapi.dto.FilmeCreateDTO;
+import br.com.dbc.vemser.pessoaapi.dto.FilmeDTO;
+import br.com.dbc.vemser.pessoaapi.exceptions.RegraDeNegocioException;
+import br.com.dbc.vemser.pessoaapi.service.FilmeService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -15,17 +13,30 @@ import java.util.List;
 @RestController
 @RequestMapping("/filmes")
 public class FilmeController {
-    private final FilmeRepository filmeRepository;
-
-    private final PessoaFilmeRepository pessoaFilmeRepository;
+    private final FilmeService filmeService;
 
     @GetMapping
-    private List<FilmeEntity> listarFilmes() {
-        return filmeRepository.findAll();
+    public List<FilmeDTO> listarFilmes() {
+        return filmeService.listarFilmes();
     }
 
-    @GetMapping("/pessoa-filme")
-    private List<PessoaFilmeEntity> listarPessoaFilme() {
-        return pessoaFilmeRepository.findAll();
+    @GetMapping("/{idFilme}")
+    public FilmeDTO listarFilmePeloId(@PathVariable Integer idFilme) throws RegraDeNegocioException {
+        return filmeService.listarFilmeDTOPeloId(idFilme);
+    }
+
+    @PostMapping
+    public FilmeDTO cadastrarFilme(@RequestBody FilmeCreateDTO filme) {
+        return filmeService.cadastrarFilme(filme);
+    }
+
+    @PutMapping("/{idFilme}")
+    public FilmeDTO atualizarFilme(@PathVariable Integer idFilme, @RequestBody FilmeCreateDTO filmeCreateDTO) throws RegraDeNegocioException {
+        return filmeService.atualizarFilme(idFilme, filmeCreateDTO);
+    }
+
+    @DeleteMapping("/{idFilme}")
+    public void deletarFilme(@PathVariable Integer idFilme) throws RegraDeNegocioException {
+        filmeService.deletarFilme(idFilme);
     }
 }
