@@ -31,6 +31,11 @@ public class EnderecoControllerImpl implements EnderecoController {
         return enderecoService.listarEnderecoDtoPeloId(idEndereco);
     }
 
+    @GetMapping("/{idPessoa}/pessoa")
+    public List<EnderecoDTO> listarEnderecoPeloIdPessoa(@PathVariable Integer idPessoa) {
+        return enderecoService.listarEnderecoPeloIdPessoa(idPessoa);
+    }
+
     @PostMapping("/{idPessoa}")
     public ResponseEntity<EnderecoDTO> cadastrarEndereco(@PathVariable Integer idPessoa,
                                                          @Valid @RequestBody EnderecoCreateDTO endereco) throws RegraDeNegocioException {

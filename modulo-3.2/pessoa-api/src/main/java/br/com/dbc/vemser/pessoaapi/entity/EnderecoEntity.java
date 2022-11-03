@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -17,6 +19,7 @@ public class EnderecoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ENDERECO_SEQ")
     @SequenceGenerator(name = "ENDERECO_SEQ", sequenceName = "seq_endereco_contato", allocationSize = 1)
+    @Column(name = "id_endereco")
     private Integer idEndereco;
 
     @Column(name = "tipo")
@@ -42,4 +45,7 @@ public class EnderecoEntity {
 
     @Column(name = "pais")
     private String pais;
+
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "enderecos")
+    private Set<PessoaEntity> pessoas = new HashSet<>();
 }

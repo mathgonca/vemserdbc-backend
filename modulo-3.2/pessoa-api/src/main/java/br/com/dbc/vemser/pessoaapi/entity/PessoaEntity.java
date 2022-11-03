@@ -1,5 +1,6 @@
 package br.com.dbc.vemser.pessoaapi.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,6 +8,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -32,4 +34,11 @@ public class PessoaEntity {
 
     @Column(name = "email")
     private String email;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "pessoa_x_pessoa_endereco",
+            joinColumns = {@JoinColumn(name = "id_pessoa")},
+            inverseJoinColumns = {@JoinColumn(name = "id_endereco")})
+    @JsonIgnore
+    private Set<EnderecoEntity> enderecos = new HashSet<>();
 }

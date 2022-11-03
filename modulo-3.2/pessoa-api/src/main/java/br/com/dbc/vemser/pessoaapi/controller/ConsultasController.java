@@ -1,6 +1,7 @@
 package br.com.dbc.vemser.pessoaapi.controller;
 
 import br.com.dbc.vemser.pessoaapi.entity.ContatoEntity;
+import br.com.dbc.vemser.pessoaapi.entity.EnderecoEntity;
 import br.com.dbc.vemser.pessoaapi.entity.PessoaEntity;
 import br.com.dbc.vemser.pessoaapi.repository.ContatoRepository;
 import br.com.dbc.vemser.pessoaapi.repository.EnderecoRepository;
@@ -40,5 +41,10 @@ public class ConsultasController {
     @GetMapping("/contato")
     public List<ContatoEntity> retornaTodosContantos() {
         return contatoRepository.findAll();
+    }
+
+    @GetMapping("/endereco")
+    public List<EnderecoEntity> retornaTodosEnderecos(){
+        return enderecoRepository.findAll();
     }
 }
