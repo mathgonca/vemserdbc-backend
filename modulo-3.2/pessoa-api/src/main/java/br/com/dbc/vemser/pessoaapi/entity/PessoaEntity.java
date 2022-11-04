@@ -15,7 +15,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "pessoa")
+@Entity(name = "Pessoa")
 public class PessoaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PESSOA_SEQ")
@@ -41,4 +41,16 @@ public class PessoaEntity {
             inverseJoinColumns = {@JoinColumn(name = "id_endereco")})
     @JsonIgnore
     private Set<EnderecoEntity> enderecos = new HashSet<>();
+
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pessoa", cascade = CascadeType.ALL)
+    private Set<ContatoEntity> contatos = new HashSet<>();
+
+    @JsonIgnore
+    @OneToOne(mappedBy = "pessoa", fetch = FetchType.LAZY)
+    private PetEntity pet;
+
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pessoa")
+    private Set<PessoaFilmeEntity> pessoaFilme;
 }

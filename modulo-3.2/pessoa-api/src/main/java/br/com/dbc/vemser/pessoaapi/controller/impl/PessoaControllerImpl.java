@@ -1,10 +1,10 @@
 package br.com.dbc.vemser.pessoaapi.controller.impl;
 
 import br.com.dbc.vemser.pessoaapi.controller.PessoaController;
-import br.com.dbc.vemser.pessoaapi.dto.PessoaCreateDTO;
-import br.com.dbc.vemser.pessoaapi.dto.PessoaDTO;
+import br.com.dbc.vemser.pessoaapi.dto.*;
 import br.com.dbc.vemser.pessoaapi.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.pessoaapi.service.PessoaService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,5 +41,24 @@ public class PessoaControllerImpl implements PessoaController {
     @DeleteMapping("/{idPessoa}")
     public void deletar(@PathVariable("idPessoa") Integer id) throws RegraDeNegocioException {
         pessoaService.deletarPessoa(id);
+    }
+
+    @Operation(summary = "Listar Pessoas com filme")
+    @GetMapping("/listar-com-enderecos")
+    public List<PessoaEnderecoDTO> listEnderecoPessoa(@RequestParam(required = false) Integer idPessoa)
+            throws RegraDeNegocioException {
+        return pessoaService.listarEnderecoPessoa(idPessoa);
+    }
+
+    @Operation(summary = "Listar Pessoas com Contato")
+    @GetMapping("/listar-com-contato")
+    public List<PessoaContatoDTO> listContatoPessoa(@RequestParam(required = false) Integer idPessoa) throws RegraDeNegocioException {
+        return pessoaService.listarContatoPessoa(idPessoa);
+    }
+
+    @Operation(summary = "Listar Pessoas com Filmes")
+    @GetMapping("/listar-com-filme")
+    public List<PessoaFilmeDTO> listFilmePessoa(@RequestParam(required = false) Integer idPessoa) throws RegraDeNegocioException {
+        return pessoaService.listarFilmesPessoa(idPessoa);
     }
 }

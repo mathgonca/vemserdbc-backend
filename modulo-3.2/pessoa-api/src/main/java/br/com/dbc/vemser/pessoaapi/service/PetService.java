@@ -2,6 +2,7 @@ package br.com.dbc.vemser.pessoaapi.service;
 
 import br.com.dbc.vemser.pessoaapi.dto.PetCreateDTO;
 import br.com.dbc.vemser.pessoaapi.dto.PetDTO;
+import br.com.dbc.vemser.pessoaapi.entity.PessoaEntity;
 import br.com.dbc.vemser.pessoaapi.entity.PetEntity;
 import br.com.dbc.vemser.pessoaapi.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.pessoaapi.repository.PetRepository;
@@ -15,6 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PetService {
     private final PetRepository petRepository;
+    private final PessoaService pessoaService;
     private final ObjectMapper objectMapper;
 
     public List<PetDTO> listarPets() {
@@ -23,8 +25,12 @@ public class PetService {
                 .toList();
     }
 
-    public PetDTO cadastrarPet(PetCreateDTO petCreateDTO) {
+    public PetDTO cadastrarPet(Integer idPessoa, PetCreateDTO petCreateDTO) throws RegraDeNegocioException {
+        PessoaEntity pessoa = pessoaService.listarPessoaPeloId(idPessoa);
         PetEntity pet = objectMapper.convertValue(petCreateDTO, PetEntity.class);
+
+//        pet.setPessoa(pessoa);
+
         return objectMapper.convertValue(petRepository.save(pet), PetDTO.class);
     }
 
@@ -40,7 +46,6 @@ public class PetService {
     public PetDTO atualizarPet(Integer idPet, PetCreateDTO petCreateDTO) throws RegraDeNegocioException {
         PetEntity pet = listarPetPeloId(idPet);
 
-        pet.setIdPessoa(petCreateDTO.getIdPessoa());
         pet.setNome(petCreateDTO.getNome());
         pet.setTipoPet(petCreateDTO.getTipoPet());
 

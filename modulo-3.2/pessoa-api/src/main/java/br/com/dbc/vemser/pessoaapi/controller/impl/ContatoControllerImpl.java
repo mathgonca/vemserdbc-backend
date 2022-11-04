@@ -5,6 +5,7 @@ import br.com.dbc.vemser.pessoaapi.dto.ContatoCreateDTO;
 import br.com.dbc.vemser.pessoaapi.dto.ContatoDTO;
 import br.com.dbc.vemser.pessoaapi.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.pessoaapi.service.ContatoService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,11 +28,13 @@ public class ContatoControllerImpl implements ContatoController {
         return contatoService.listarContatos();
     }
 
+    @Operation(summary = "Listar contatos pela IdPessoa")
     @GetMapping("/{idPessoa}")
     public List<ContatoDTO> listarContatosPeloIdPessoa(@PathVariable Integer idPessoa) {
         return contatoService.listarContatoPeloIdPessoa(idPessoa);
     }
 
+    @Operation(summary = "Listar contatos pelo IdPessoa")
     @PostMapping("/{idPessoa}")
     public ResponseEntity<ContatoDTO> cadastrarContato(@PathVariable Integer idPessoa,
                                                        @Valid @RequestBody ContatoCreateDTO contato) throws RegraDeNegocioException {

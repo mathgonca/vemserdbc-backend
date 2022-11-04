@@ -7,11 +7,14 @@ import br.com.dbc.vemser.pessoaapi.entity.PessoaEntity;
 import br.com.dbc.vemser.pessoaapi.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.pessoaapi.repository.EnderecoRepository;
 import br.com.dbc.vemser.pessoaapi.repository.PessoaRepository;
+import br.com.dbc.vemser.pessoaapi.service.enums.TipoAcao;
+import br.com.dbc.vemser.pessoaapi.service.enums.TipoEntidade;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -39,7 +42,7 @@ public class EnderecoService {
         pessoaEntity.getEnderecos().add(enderecoSalvo);
         pessoaRepository.save(pessoaEntity);
 
-//        emailService.mandarEmailAcaoCadastro(pessoaEntity.getNome(), pessoaEntity.getEmail(), TipoEntidade.ENDERECO, TipoAcao.CADASTRAR);
+        emailService.mandarEmailAcaoCadastro(pessoaEntity.getNome(), pessoaEntity.getEmail(), TipoEntidade.ENDERECO, TipoAcao.CADASTRAR);
 
         return objectMapper.convertValue(enderecoSalvo, EnderecoDTO.class);
     }

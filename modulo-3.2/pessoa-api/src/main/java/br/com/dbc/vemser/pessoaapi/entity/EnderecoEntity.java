@@ -1,6 +1,7 @@
 package br.com.dbc.vemser.pessoaapi.entity;
 
 import br.com.dbc.vemser.pessoaapi.entity.enums.TipoEndereco;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -46,6 +47,11 @@ public class EnderecoEntity {
     @Column(name = "pais")
     private String pais;
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "enderecos")
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "Pessoa_X_Pessoa_Endereco",
+            joinColumns = @JoinColumn(name = "id_endereco"),
+            inverseJoinColumns = @JoinColumn(name = "id_pessoa")
+    )
     private Set<PessoaEntity> pessoas = new HashSet<>();
 }

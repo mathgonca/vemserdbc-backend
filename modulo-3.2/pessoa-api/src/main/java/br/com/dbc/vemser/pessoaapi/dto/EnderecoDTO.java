@@ -14,5 +14,4 @@ import java.util.List;
 @NoArgsConstructor
 public class EnderecoDTO extends EnderecoCreateDTO {
     private Integer idEndereco;
-    private List<PessoaEntity> pessoas;
 }

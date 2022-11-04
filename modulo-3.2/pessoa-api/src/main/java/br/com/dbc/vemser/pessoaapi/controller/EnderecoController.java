@@ -32,7 +32,7 @@ public interface EnderecoController {
             }
     )
     ResponseEntity<EnderecoDTO> cadastrarEndereco(@PathVariable Integer idPessoa,
-                                                         @Valid @RequestBody EnderecoCreateDTO endereco) throws RegraDeNegocioException;
+                                                  @RequestBody EnderecoCreateDTO endereco) throws RegraDeNegocioException;
 
     @Operation(summary = "Atualizar Endereço", description = "Atualizar dados de um Endereço cadastrado no banco.")
     @ApiResponses(
@@ -43,7 +43,7 @@ public interface EnderecoController {
             }
     )
     ResponseEntity<EnderecoDTO> atualizarEndereco(@PathVariable Integer idEndereco,
-                                                         @Valid @RequestBody EnderecoCreateDTO endereco) throws RegraDeNegocioException;
+                                                  @RequestBody EnderecoCreateDTO endereco) throws RegraDeNegocioException;
 
     @Operation(summary = "Deletar Endereço pelo Id", description = "Deleta um Endereço pelo idEndereço")
     @ApiResponses(
@@ -53,4 +53,7 @@ public interface EnderecoController {
             }
     )
     void deletarEndereco(@PathVariable Integer idEndereco) throws RegraDeNegocioException;
+
+    @Operation(summary = "Listar endereços por Pessoa", description = "Listar todos os Endereços de uma Pessoa filtrada pelo idPessoa.")
+    List<EnderecoDTO> listarEnderecoPeloIdPessoa(@PathVariable Integer idPessoa);
 }

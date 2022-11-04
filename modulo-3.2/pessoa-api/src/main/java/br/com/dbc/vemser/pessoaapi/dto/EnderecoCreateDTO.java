@@ -1,6 +1,8 @@
 package br.com.dbc.vemser.pessoaapi.dto;
 
+import br.com.dbc.vemser.pessoaapi.entity.PessoaEntity;
 import br.com.dbc.vemser.pessoaapi.entity.enums.TipoEndereco;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,6 +12,7 @@ import lombok.Setter;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -19,6 +22,9 @@ public class EnderecoCreateDTO {
     @NotNull
     @Schema(description = "Tipo de Endereço", example = "RESIDENCIAL ou COMERCIAL")
     private TipoEndereco tipo;
+
+    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
+    private Integer idPessoa;
 
     @NotEmpty
     @Size(max = 250)
@@ -51,4 +57,7 @@ public class EnderecoCreateDTO {
     @NotNull
     @Schema(example = "Brasil")
     private String pais;
+
+    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
+    private Set<PessoaEntity> pessoa;
 }

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -20,12 +21,16 @@ public class FilmeEntity {
     @Column(name = "id_filme")
     private Integer idFilme;
 
+    @Embedded
     @Column(name = "descricao")
-    private String descricao;
+    private Descricao descricao;
 
     @Column(name = "nota")
     private int nota;
 
     @Column(name = "tipo")
     private TipoFilme tipoFilme;
+
+    @OneToMany(mappedBy = "filme", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<PessoaFilmeEntity> pessoaFilmeEntities;
 }

@@ -38,13 +38,13 @@ public class EnderecoControllerImpl implements EnderecoController {
 
     @PostMapping("/{idPessoa}")
     public ResponseEntity<EnderecoDTO> cadastrarEndereco(@PathVariable Integer idPessoa,
-                                                         @Valid @RequestBody EnderecoCreateDTO endereco) throws RegraDeNegocioException {
+                                                         @RequestBody EnderecoCreateDTO endereco) throws RegraDeNegocioException {
         return new ResponseEntity<>(enderecoService.cadastrarEndereco(idPessoa, endereco), HttpStatus.OK);
     }
 
     @PutMapping("/{idEndereco}")
     public ResponseEntity<EnderecoDTO> atualizarEndereco(@PathVariable Integer idEndereco,
-                                                         @Valid @RequestBody EnderecoCreateDTO endereco) throws RegraDeNegocioException {
+                                                         @RequestBody EnderecoCreateDTO endereco) throws RegraDeNegocioException {
         return new ResponseEntity<>(enderecoService.atualizarEndereco(idEndereco, endereco), HttpStatus.OK);
     }
 

@@ -2,20 +2,18 @@ package br.com.dbc.vemser.pessoaapi.dto;
 
 import br.com.dbc.vemser.pessoaapi.entity.enums.TipoContato;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Data
 public class ContatoCreateDTO {
+    @NotNull
+    @Schema(example = "1")
+    private Integer idPessoa;
+
     @NotNull
     @Schema(example = "RESIDENCIAL ou COMERCIAL")
     private TipoContato tipoContato;

@@ -1,7 +1,6 @@
 package br.com.dbc.vemser.pessoaapi.service;
 
-import br.com.dbc.vemser.pessoaapi.dto.PessoaCreateDTO;
-import br.com.dbc.vemser.pessoaapi.dto.PessoaDTO;
+import br.com.dbc.vemser.pessoaapi.dto.*;
 import br.com.dbc.vemser.pessoaapi.entity.PessoaEntity;
 import br.com.dbc.vemser.pessoaapi.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.pessoaapi.repository.PessoaRepository;
@@ -13,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -30,10 +30,8 @@ public class PessoaService {
     }
 
     public List<PessoaDTO> listarPessoas() {
-        List<PessoaEntity> pessoaEntityList = pessoaRepository.findAll();
-
-        return pessoaEntityList.stream()
-                .map(pessoaEntity -> objectMapper.convertValue(pessoaEntity, PessoaDTO.class))
+        return pessoaRepository.findAll().stream()
+                .map(pessoa -> objectMapper.convertValue(pessoa, PessoaDTO.class))
                 .toList();
     }
 
@@ -69,5 +67,67 @@ public class PessoaService {
 
         emailService.mandarEmailAcaoCadastro(pessoaEntityRecuperada.getNome(), pessoaEntityRecuperada.getEmail(),
                 TipoEntidade.PESSOA, TipoAcao.DELETAR);
+    }
+
+    public List<PessoaEnderecoDTO> listarEnderecoPessoa(Integer idPessoa) throws RegraDeNegocioException {
+        if (idPessoa == null) {
+            return pessoaRepository.findAll().stream()
+                    .map(pessoa -> getPessoaEnderecoDTO(pessoa))
+                    .toList();
+        }
+
+        return pessoaRepository.findById(idPessoa).stream()
+                .map(pessoa -> getPessoaEnderecoDTO(pessoa))
+                .toList();
+    }
+
+    private PessoaEnderecoDTO getPessoaEnderecoDTO(PessoaEntity pessoa) {
+        PessoaEnderecoDTO pessoaEnderecoDTO = objectMapper.convertValue(pessoa, PessoaEnderecoDTO.class);
+        pessoaEnderecoDTO.setEnderecos(pessoa.getEnderecos().stream()
+                .map(enderecoEntity -> objectMapper.convertValue(enderecoEntity, EnderecoDTO.class))
+                .collect(Collectors.toSet()));
+        return pessoaEnderecoDTO;
+    }
+
+    public List<PessoaContatoDTO> listarContatoPessoa(Integer idPessoa) throws RegraDeNegocioException {
+        if (idPessoa == null) {
+            return pessoaRepository.findAll().stream()
+                    .map(pessoa -> getPessoaContatoDTO(pessoa))
+                    .toList();
+        }
+
+        return pessoaRepository.findById(idPessoa).stream()
+                .map(this::getPessoaContatoDTO)
+                .toList();
+    }
+
+    private PessoaContatoDTO getPessoaContatoDTO(PessoaEntity pessoa) {
+        PessoaContatoDTO pessoaContatoDTO = objectMapper.convertValue(pessoa, PessoaContatoDTO.class);
+        pessoaContatoDTO.setContatos(pessoa.getContatos().stream()
+                .map(contatoEntity -> objectMapper.convertValue(contatoEntity, ContatoDTO.class))
+                .collect(Collectors.toSet()));
+        return pessoaContatoDTO;
+    }
+
+    public List<PessoaFilmeDTO> listarFilmesPessoa(Integer idPessoa) {
+        if (idPessoa == null) {
+            return pessoaRepository.findAll().stream()
+                    .map(this::getPessoaFilmeDTO)
+                    .toList();
+
+        }
+
+        return pessoaRepository.findById(idPessoa).stream()
+                .map(this::getPessoaFilmeDTO)
+                .toList();
+    }
+
+
+    private PessoaFilmeDTO getPessoaFilmeDTO(PessoaEntity pessoa) {
+        PessoaFilmeDTO pessoaFilmeDTO = objectMapper.convertValue(pessoa, PessoaFilmeDTO.class);
+        pessoaFilmeDTO.setPessoaFilme(pessoa.getPessoaFilme().stream()
+                .map(pessoaFilme -> objectMapper.convertValue(pessoaFilme, PessoaFilmeNovoDTO.class))
+                .toList());
+        return pessoaFilmeDTO;
     }
 }
