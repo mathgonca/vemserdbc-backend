@@ -38,7 +38,7 @@ public class EnderecoControllerImpl implements EnderecoController {
 
     @PostMapping("/{idPessoa}")
     public ResponseEntity<EnderecoDTO> cadastrarEndereco(@PathVariable Integer idPessoa,
-                                                         @RequestBody EnderecoCreateDTO endereco) throws RegraDeNegocioException {
+                                                         @RequestBody @Valid EnderecoCreateDTO endereco) throws RegraDeNegocioException {
         return new ResponseEntity<>(enderecoService.cadastrarEndereco(idPessoa, endereco), HttpStatus.OK);
     }
 

@@ -17,7 +17,7 @@ import java.time.LocalDate;
 @Entity(name = "pessoa_x_filme")
 public class PessoaFilmeEntity {
     @EmbeddedId
-    private PessoaFilmeId pessoaFilmeId = new PessoaFilmeId();
+    private PessoaFilmeId pessoaFilmeId;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)

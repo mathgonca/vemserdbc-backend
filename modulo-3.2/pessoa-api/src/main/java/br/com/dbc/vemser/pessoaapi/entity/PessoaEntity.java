@@ -40,11 +40,11 @@ public class PessoaEntity {
             joinColumns = {@JoinColumn(name = "id_pessoa")},
             inverseJoinColumns = {@JoinColumn(name = "id_endereco")})
     @JsonIgnore
-    private Set<EnderecoEntity> enderecos = new HashSet<>();
+    private Set<EnderecoEntity> enderecos ;
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "pessoa", cascade = CascadeType.ALL)
-    private Set<ContatoEntity> contatos = new HashSet<>();
+    private Set<ContatoEntity> contatos;
 
     @JsonIgnore
     @OneToOne(mappedBy = "pessoa", fetch = FetchType.LAZY)

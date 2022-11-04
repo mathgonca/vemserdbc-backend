@@ -53,5 +53,6 @@ public class EnderecoEntity {
             joinColumns = @JoinColumn(name = "id_endereco"),
             inverseJoinColumns = @JoinColumn(name = "id_pessoa")
     )
-    private Set<PessoaEntity> pessoas = new HashSet<>();
+    private Set<PessoaEntity> pessoas;
+
 }

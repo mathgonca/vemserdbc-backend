@@ -66,6 +66,8 @@ public class EnderecoService {
     public EnderecoDTO atualizarEndereco(Integer idEndereco, EnderecoCreateDTO enderecoCreateDTO) throws RegraDeNegocioException {
         EnderecoEntity endereco = listarEnderecoPeloId(idEndereco);
 
+        PessoaEntity pessoa = pessoaService.listarPessoaPeloId(enderecoCreateDTO.getIdPessoa());
+
         endereco.setTipo(enderecoCreateDTO.getTipo());
         endereco.setLogradouro(enderecoCreateDTO.getLogradouro());
         endereco.setNumero(enderecoCreateDTO.getNumero());
