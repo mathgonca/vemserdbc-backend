@@ -61,4 +61,10 @@ public class PessoaControllerImpl implements PessoaController {
     public List<PessoaFilmeDTO> listFilmePessoa(@RequestParam(required = false) Integer idPessoa) throws RegraDeNegocioException {
         return pessoaService.listarFilmesPessoa(idPessoa);
     }
+
+    @Operation(summary = "Listar o Relatório Personalizado")
+    @GetMapping("/pessoa-relatorio")
+    public List<RelatorioPersonalizadoDTO> findRelatorioPersonalizado(@RequestParam(required = false) Integer idPessoa) {
+        return pessoaService.listarRelatorioPersonalizado(idPessoa);
+    }
 }

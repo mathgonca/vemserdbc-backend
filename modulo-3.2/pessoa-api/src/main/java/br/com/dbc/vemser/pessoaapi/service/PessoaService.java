@@ -130,4 +130,8 @@ public class PessoaService {
                 .toList());
         return pessoaFilmeDTO;
     }
+
+    public List<RelatorioPersonalizadoDTO> listarRelatorioPersonalizado(Integer idPessoa) {
+        return pessoaRepository.listarRelatorioPersonalizado(idPessoa);
+    }
 }
