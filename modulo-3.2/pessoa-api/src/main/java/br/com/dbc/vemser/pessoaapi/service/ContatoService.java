@@ -19,9 +19,18 @@ public class ContatoService {
     private final PessoaService pessoaService;
     private final ObjectMapper objectMapper;
 
+    public ContatoDTO setContatoDTO (ContatoEntity contato) {
+        ContatoDTO contatoDTO = objectMapper.convertValue(contato, ContatoDTO.class);
+
+        Integer idPessoa = contato.getPessoa().getIdPessoa();
+        contatoDTO.setIdPessoa(idPessoa);
+
+        return contatoDTO;
+    }
+
     public List<ContatoDTO> listarContatos() {
         return contatoRepository.findAll().stream()
-                .map(contatoEntity -> objectMapper.convertValue(contatoEntity, ContatoDTO.class))
+                .map(this::setContatoDTO)
                 .toList();
     }
 
@@ -30,7 +39,8 @@ public class ContatoService {
         ContatoEntity contatoEntityCadastro = objectMapper.convertValue(contatoCreateDTO, ContatoEntity.class);
         contatoEntityCadastro.setPessoa(pessoa);
 
-        return objectMapper.convertValue(contatoRepository.save(contatoEntityCadastro), ContatoDTO.class);
+        ContatoEntity contatoSalvo = contatoRepository.save(contatoEntityCadastro);
+        return setContatoDTO(contatoSalvo);
     }
 
     public ContatoEntity listarContatoPeloId(Integer id) throws RegraDeNegocioException {
@@ -40,7 +50,7 @@ public class ContatoService {
 
     public List<ContatoDTO> listarContatoPeloIdPessoa(Integer idPessoa) {
         return contatoRepository.findAllByPessoaIdPessoa(idPessoa).stream()
-                .map(contatoEntity -> objectMapper.convertValue(contatoEntity, ContatoDTO.class))
+                .map(this::setContatoDTO)
                 .toList();
     }
 
@@ -51,7 +61,8 @@ public class ContatoService {
         contatoEntityRecuperado.setNumero(contatoCreateDTO.getNumero());
         contatoEntityRecuperado.setDescricao(contatoCreateDTO.getDescricao());
 
-        return objectMapper.convertValue(contatoRepository.save(contatoEntityRecuperado), ContatoDTO.class);
+        ContatoEntity contatoAtualizado = contatoRepository.save(contatoEntityRecuperado);
+        return setContatoDTO(contatoAtualizado);
     }
 
     public void deletarContato(Integer id) throws RegraDeNegocioException {
