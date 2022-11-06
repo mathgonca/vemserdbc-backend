@@ -2,6 +2,7 @@ package br.com.dbc.vemser.pessoaapi.controller.documentacao;
 
 import br.com.dbc.vemser.pessoaapi.dto.contato.ContatoCreateDTO;
 import br.com.dbc.vemser.pessoaapi.dto.contato.ContatoDTO;
+import br.com.dbc.vemser.pessoaapi.dto.contato.ContatoUpdateDTO;
 import br.com.dbc.vemser.pessoaapi.exceptions.RegraDeNegocioException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -38,7 +39,7 @@ public interface ContatoControllerDoc {
             }
     )
     ResponseEntity<ContatoDTO> atualizarContato(@PathVariable Integer id,
-                                                @Valid @RequestBody ContatoCreateDTO contatoAtualizado) throws RegraDeNegocioException;
+                                                @Valid @RequestBody ContatoUpdateDTO contatoAtualizado) throws RegraDeNegocioException;
 
     @Operation(summary = "Deletar Contato pelo Id", description = "Deleta um Contato pelo idContato")
     @ApiResponses(

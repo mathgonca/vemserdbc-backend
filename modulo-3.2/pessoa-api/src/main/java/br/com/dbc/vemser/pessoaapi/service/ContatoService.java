@@ -2,6 +2,7 @@ package br.com.dbc.vemser.pessoaapi.service;
 
 import br.com.dbc.vemser.pessoaapi.dto.contato.ContatoCreateDTO;
 import br.com.dbc.vemser.pessoaapi.dto.contato.ContatoDTO;
+import br.com.dbc.vemser.pessoaapi.dto.contato.ContatoUpdateDTO;
 import br.com.dbc.vemser.pessoaapi.entity.ContatoEntity;
 import br.com.dbc.vemser.pessoaapi.entity.PessoaEntity;
 import br.com.dbc.vemser.pessoaapi.exceptions.RegraDeNegocioException;
@@ -54,12 +55,14 @@ public class ContatoService {
                 .toList();
     }
 
-    public ContatoDTO atualizarContato(Integer id, ContatoCreateDTO contatoCreateDTO) throws RegraDeNegocioException {
+    public ContatoDTO atualizarContato(Integer id, ContatoUpdateDTO contatoUpdateDTO) throws RegraDeNegocioException {
         ContatoEntity contatoEntityRecuperado = listarContatoPeloId(id);
+        PessoaEntity pessoa = pessoaService.listarPessoaPeloId(contatoUpdateDTO.getIdPessoa());
 
-        contatoEntityRecuperado.setTipoContato(contatoCreateDTO.getTipoContato());
-        contatoEntityRecuperado.setNumero(contatoCreateDTO.getNumero());
-        contatoEntityRecuperado.setDescricao(contatoCreateDTO.getDescricao());
+        contatoEntityRecuperado.setTipoContato(contatoUpdateDTO.getTipoContato());
+        contatoEntityRecuperado.setNumero(contatoUpdateDTO.getNumero());
+        contatoEntityRecuperado.setDescricao(contatoUpdateDTO.getDescricao());
+        contatoEntityRecuperado.setPessoa(pessoa);
 
         ContatoEntity contatoAtualizado = contatoRepository.save(contatoEntityRecuperado);
         return setContatoDTO(contatoAtualizado);

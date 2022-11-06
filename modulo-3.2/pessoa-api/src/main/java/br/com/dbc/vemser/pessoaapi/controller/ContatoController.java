@@ -3,6 +3,7 @@ package br.com.dbc.vemser.pessoaapi.controller;
 import br.com.dbc.vemser.pessoaapi.controller.documentacao.ContatoControllerDoc;
 import br.com.dbc.vemser.pessoaapi.dto.contato.ContatoCreateDTO;
 import br.com.dbc.vemser.pessoaapi.dto.contato.ContatoDTO;
+import br.com.dbc.vemser.pessoaapi.dto.contato.ContatoUpdateDTO;
 import br.com.dbc.vemser.pessoaapi.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.pessoaapi.service.ContatoService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -43,7 +44,7 @@ public class ContatoController implements ContatoControllerDoc {
 
     @PutMapping("/{id}")
     public ResponseEntity<ContatoDTO> atualizarContato(@PathVariable Integer id,
-                                                       @Valid @RequestBody ContatoCreateDTO contatoAtualizado) throws RegraDeNegocioException {
+                                                       @Valid @RequestBody ContatoUpdateDTO contatoAtualizado) throws RegraDeNegocioException {
         return new ResponseEntity<>(contatoService.atualizarContato(id, contatoAtualizado), HttpStatus.OK);
     }
 

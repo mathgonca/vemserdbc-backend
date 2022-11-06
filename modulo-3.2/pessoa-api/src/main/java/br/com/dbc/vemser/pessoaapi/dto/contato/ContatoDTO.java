@@ -7,4 +7,7 @@ import lombok.Data;
 public class ContatoDTO extends ContatoCreateDTO {
     @Schema(example = "4")
     private Integer idContato;
+
+    @Schema(example = "8")
+    private Integer idPessoa;
 }
