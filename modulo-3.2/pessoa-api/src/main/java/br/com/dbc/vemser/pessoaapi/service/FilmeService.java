@@ -1,7 +1,7 @@
 package br.com.dbc.vemser.pessoaapi.service;
 
-import br.com.dbc.vemser.pessoaapi.dto.FilmeCreateDTO;
-import br.com.dbc.vemser.pessoaapi.dto.FilmeDTO;
+import br.com.dbc.vemser.pessoaapi.dto.filme.FilmeCreateDTO;
+import br.com.dbc.vemser.pessoaapi.dto.filme.FilmeDTO;
 import br.com.dbc.vemser.pessoaapi.entity.FilmeEntity;
 import br.com.dbc.vemser.pessoaapi.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.pessoaapi.repository.FilmeRepository;

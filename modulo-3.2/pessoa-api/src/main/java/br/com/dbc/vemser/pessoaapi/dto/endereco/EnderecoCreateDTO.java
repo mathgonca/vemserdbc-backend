@@ -1,4 +1,4 @@
-package br.com.dbc.vemser.pessoaapi.dto;
+package br.com.dbc.vemser.pessoaapi.dto.endereco;
 
 import br.com.dbc.vemser.pessoaapi.entity.PessoaEntity;
 import br.com.dbc.vemser.pessoaapi.entity.enums.TipoEndereco;

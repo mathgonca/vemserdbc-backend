@@ -1,4 +1,4 @@
-package br.com.dbc.vemser.pessoaapi.dto;
+package br.com.dbc.vemser.pessoaapi.dto.filme;
 
 import br.com.dbc.vemser.pessoaapi.entity.Descricao;
 import io.swagger.v3.oas.annotations.media.Schema;

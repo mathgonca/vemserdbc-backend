@@ -1,7 +1,6 @@
 package br.com.dbc.vemser.pessoaapi.entity;
 
 import br.com.dbc.vemser.pessoaapi.entity.enums.TipoPet;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,8 +26,7 @@ public class PetEntity {
     @Column(name = "tipo")
     private TipoPet tipoPet;
 
-    @JsonIgnore
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "id_pessoa", referencedColumnName = "id_pessoa")
     private PessoaEntity pessoa;
 }

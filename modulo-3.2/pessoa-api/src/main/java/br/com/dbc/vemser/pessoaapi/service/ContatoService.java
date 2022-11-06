@@ -1,7 +1,7 @@
 package br.com.dbc.vemser.pessoaapi.service;
 
-import br.com.dbc.vemser.pessoaapi.dto.ContatoCreateDTO;
-import br.com.dbc.vemser.pessoaapi.dto.ContatoDTO;
+import br.com.dbc.vemser.pessoaapi.dto.contato.ContatoCreateDTO;
+import br.com.dbc.vemser.pessoaapi.dto.contato.ContatoDTO;
 import br.com.dbc.vemser.pessoaapi.entity.ContatoEntity;
 import br.com.dbc.vemser.pessoaapi.entity.PessoaEntity;
 import br.com.dbc.vemser.pessoaapi.exceptions.RegraDeNegocioException;
@@ -11,15 +11,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class ContatoService {
-
     private final ContatoRepository contatoRepository;
     private final PessoaService pessoaService;
-    private final EmailService emailService;
     private final ObjectMapper objectMapper;
 
     public List<ContatoDTO> listarContatos() {

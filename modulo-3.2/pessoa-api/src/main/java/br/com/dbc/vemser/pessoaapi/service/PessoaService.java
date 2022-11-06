@@ -1,6 +1,9 @@
 package br.com.dbc.vemser.pessoaapi.service;
 
-import br.com.dbc.vemser.pessoaapi.dto.*;
+import br.com.dbc.vemser.pessoaapi.dto.RelatorioPersonalizadoDTO;
+import br.com.dbc.vemser.pessoaapi.dto.contato.ContatoDTO;
+import br.com.dbc.vemser.pessoaapi.dto.endereco.EnderecoDTO;
+import br.com.dbc.vemser.pessoaapi.dto.pessoa.*;
 import br.com.dbc.vemser.pessoaapi.entity.PessoaEntity;
 import br.com.dbc.vemser.pessoaapi.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.pessoaapi.repository.PessoaRepository;
@@ -11,21 +14,25 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class PessoaService {
     private final PessoaRepository pessoaRepository;
-    private final EmailService emailService;
+//    private final EmailService emailService;
     private final ObjectMapper objectMapper;
 
     public PessoaDTO cadastrarPessoa(PessoaCreateDTO pessoaCreateDTO) {
         PessoaEntity pessoaEntity = objectMapper.convertValue(pessoaCreateDTO, PessoaEntity.class);
 
         PessoaDTO pessoaCadastrada = objectMapper.convertValue(pessoaRepository.save(pessoaEntity), PessoaDTO.class);
-        emailService.sendEmailCadastroPessoa(pessoaCadastrada.getNome(), pessoaCadastrada.getIdPessoa(), pessoaCadastrada.getEmail());
+
+        String nomePessoaCadastrada = pessoaCadastrada.getNome();
+        Integer idPessoa = pessoaCadastrada.getIdPessoa();
+        String email = pessoaCadastrada.getEmail();
+//        emailService.sendEmailCadastroPessoa(nomePessoaCadastrada, idPessoa, email);
+
         return pessoaCadastrada;
     }
 
@@ -36,13 +43,8 @@ public class PessoaService {
     }
 
     public PessoaEntity listarPessoaPeloId(Integer idPessoa) throws RegraDeNegocioException {
-        Optional<PessoaEntity> pessoaRecuperada = pessoaRepository.findById(idPessoa);
-
-        if (pessoaRecuperada.isEmpty()) {
-            throw new RegraDeNegocioException("Pessoa não cadastrada");
-        }
-
-        return pessoaRecuperada.get();
+        return pessoaRepository.findById(idPessoa)
+                .orElseThrow(() -> new RegraDeNegocioException("Pessoa não cadastrada"));
     }
 
     public PessoaDTO atualizarPessoa(Integer id, PessoaCreateDTO pessoaAtualizar) throws RegraDeNegocioException {
@@ -55,8 +57,8 @@ public class PessoaService {
 
         PessoaEntity pessoaEntityAtualizada = pessoaRepository.save(pessoaEntityRecuperada);
 
-        emailService.mandarEmailAcaoCadastro(pessoaAtualizar.getNome(), pessoaAtualizar.getEmail(),
-                TipoEntidade.PESSOA, TipoAcao.ATUALIZAR);
+//        emailService.mandarEmailAcaoCadastro(pessoaAtualizar.getNome(), pessoaAtualizar.getEmail(),
+//                TipoEntidade.PESSOA, TipoAcao.ATUALIZAR);
 
         return objectMapper.convertValue(pessoaEntityAtualizada, PessoaDTO.class);
     }
@@ -65,19 +67,20 @@ public class PessoaService {
         PessoaEntity pessoaEntityRecuperada = listarPessoaPeloId(id);
         pessoaRepository.delete(pessoaEntityRecuperada);
 
-        emailService.mandarEmailAcaoCadastro(pessoaEntityRecuperada.getNome(), pessoaEntityRecuperada.getEmail(),
-                TipoEntidade.PESSOA, TipoAcao.DELETAR);
+        String nome = pessoaEntityRecuperada.getNome();
+        String email = pessoaEntityRecuperada.getEmail();
+//        emailService.mandarEmailAcaoCadastro(nome, email, TipoEntidade.PESSOA, TipoAcao.DELETAR);
     }
 
-    public List<PessoaEnderecoDTO> listarEnderecoPessoa(Integer idPessoa) throws RegraDeNegocioException {
+    public List<PessoaEnderecoDTO> listarEnderecoPessoa(Integer idPessoa) {
         if (idPessoa == null) {
             return pessoaRepository.findAll().stream()
-                    .map(pessoa -> getPessoaEnderecoDTO(pessoa))
+                    .map(this::getPessoaEnderecoDTO)
                     .toList();
         }
 
         return pessoaRepository.findById(idPessoa).stream()
-                .map(pessoa -> getPessoaEnderecoDTO(pessoa))
+                .map(this::getPessoaEnderecoDTO)
                 .toList();
     }
 
@@ -89,10 +92,10 @@ public class PessoaService {
         return pessoaEnderecoDTO;
     }
 
-    public List<PessoaContatoDTO> listarContatoPessoa(Integer idPessoa) throws RegraDeNegocioException {
+    public List<PessoaContatoDTO> listarContatoPessoa(Integer idPessoa) {
         if (idPessoa == null) {
             return pessoaRepository.findAll().stream()
-                    .map(pessoa -> getPessoaContatoDTO(pessoa))
+                    .map(this::getPessoaContatoDTO)
                     .toList();
         }
 
@@ -114,7 +117,6 @@ public class PessoaService {
             return pessoaRepository.findAll().stream()
                     .map(this::getPessoaFilmeDTO)
                     .toList();
-
         }
 
         return pessoaRepository.findById(idPessoa).stream()
@@ -125,9 +127,11 @@ public class PessoaService {
 
     private PessoaFilmeDTO getPessoaFilmeDTO(PessoaEntity pessoa) {
         PessoaFilmeDTO pessoaFilmeDTO = objectMapper.convertValue(pessoa, PessoaFilmeDTO.class);
+
         pessoaFilmeDTO.setPessoaFilme(pessoa.getPessoaFilme().stream()
                 .map(pessoaFilme -> objectMapper.convertValue(pessoaFilme, PessoaFilmeNovoDTO.class))
                 .toList());
+
         return pessoaFilmeDTO;
     }
 

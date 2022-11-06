@@ -1,4 +1,4 @@
-package br.com.dbc.vemser.pessoaapi.controller;
+package br.com.dbc.vemser.pessoaapi.controller.swagger;
 
 import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.web.bind.annotation.GetMapping;

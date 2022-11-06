@@ -1,7 +1,7 @@
 package br.com.dbc.vemser.pessoaapi.service;
 
-import br.com.dbc.vemser.pessoaapi.dto.EnderecoCreateDTO;
-import br.com.dbc.vemser.pessoaapi.dto.EnderecoDTO;
+import br.com.dbc.vemser.pessoaapi.dto.endereco.EnderecoCreateDTO;
+import br.com.dbc.vemser.pessoaapi.dto.endereco.EnderecoDTO;
 import br.com.dbc.vemser.pessoaapi.entity.EnderecoEntity;
 import br.com.dbc.vemser.pessoaapi.entity.PessoaEntity;
 import br.com.dbc.vemser.pessoaapi.exceptions.RegraDeNegocioException;
@@ -22,7 +22,7 @@ public class EnderecoService {
     private final EnderecoRepository enderecoRepository;
     private final PessoaService pessoaService;
     private final PessoaRepository pessoaRepository;
-    private final EmailService emailService;
+//    private final EmailService emailService;
     private final ObjectMapper objectMapper;
 
     public List<EnderecoDTO> listarEnderecos() {
@@ -42,7 +42,8 @@ public class EnderecoService {
         pessoaEntity.getEnderecos().add(enderecoSalvo);
         pessoaRepository.save(pessoaEntity);
 
-        emailService.mandarEmailAcaoCadastro(pessoaEntity.getNome(), pessoaEntity.getEmail(), TipoEntidade.ENDERECO, TipoAcao.CADASTRAR);
+//        emailService.mandarEmailAcaoCadastro(pessoaEntity.getNome(), pessoaEntity.getEmail(),
+//                TipoEntidade.ENDERECO, TipoAcao.CADASTRAR);
 
         return objectMapper.convertValue(enderecoSalvo, EnderecoDTO.class);
     }
@@ -68,6 +69,8 @@ public class EnderecoService {
 
         PessoaEntity pessoa = pessoaService.listarPessoaPeloId(enderecoCreateDTO.getIdPessoa());
 
+        endereco.getPessoas().clear();
+        endereco.getPessoas().add(pessoa);
         endereco.setTipo(enderecoCreateDTO.getTipo());
         endereco.setLogradouro(enderecoCreateDTO.getLogradouro());
         endereco.setNumero(enderecoCreateDTO.getNumero());

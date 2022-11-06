@@ -28,7 +28,7 @@ public class ContatoEntity {
     private TipoContato tipoContato;
 
     @Column(name = "numero")
-    private String  numero;
+    private String numero;
 
     @Column(name = "descricao")
     private String descricao;

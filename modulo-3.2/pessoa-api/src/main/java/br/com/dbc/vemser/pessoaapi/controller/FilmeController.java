@@ -1,8 +1,8 @@
-package br.com.dbc.vemser.pessoaapi.controller.impl;
+package br.com.dbc.vemser.pessoaapi.controller;
 
-import br.com.dbc.vemser.pessoaapi.dto.FilmeAvaliadoDTO;
-import br.com.dbc.vemser.pessoaapi.dto.FilmeCreateDTO;
-import br.com.dbc.vemser.pessoaapi.dto.FilmeDTO;
+import br.com.dbc.vemser.pessoaapi.dto.filme.FilmeAvaliadoDTO;
+import br.com.dbc.vemser.pessoaapi.dto.filme.FilmeCreateDTO;
+import br.com.dbc.vemser.pessoaapi.dto.filme.FilmeDTO;
 import br.com.dbc.vemser.pessoaapi.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.pessoaapi.service.FilmeService;
 import br.com.dbc.vemser.pessoaapi.service.PessoaFilmeService;

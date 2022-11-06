@@ -1,4 +1,4 @@
-package br.com.dbc.vemser.pessoaapi.controller.impl;
+package br.com.dbc.vemser.pessoaapi.controller.feignclient;
 
 import br.com.dbc.vemser.pessoaapi.client.DadosPessoaisClient;
 import br.com.dbc.vemser.pessoaapi.dto.DadosPessoaisDTO;
@@ -10,7 +10,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/dados-pessoais")
-public class DadosPessoaisControllerImpl {
+public class DadosPessoaisController {
 
     private final DadosPessoaisClient service;
 

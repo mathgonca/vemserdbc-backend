@@ -1,50 +1,71 @@
 package br.com.dbc.vemser.pessoaapi.controller;
 
-import br.com.dbc.vemser.pessoaapi.dto.PessoaCreateDTO;
-import br.com.dbc.vemser.pessoaapi.dto.PessoaDTO;
-import freemarker.template.TemplateException;
+import br.com.dbc.vemser.pessoaapi.controller.documentacao.PessoaControllerDoc;
+import br.com.dbc.vemser.pessoaapi.dto.RelatorioPersonalizadoDTO;
+import br.com.dbc.vemser.pessoaapi.dto.pessoa.*;
+import br.com.dbc.vemser.pessoaapi.exceptions.RegraDeNegocioException;
+import br.com.dbc.vemser.pessoaapi.service.PessoaService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.io.IOException;
 import java.util.List;
 
-public interface PessoaController {
+@Validated
+@RequiredArgsConstructor
+@RestController
+@RequestMapping("/pessoa")
+public class PessoaController implements PessoaControllerDoc {
 
-    @Operation(summary = "Cadastrar Pessoa")
-    @ApiResponses(
-            value = {
-                    @ApiResponse(responseCode = "200", description = "Cadastra novo Pessoa com sucesso"),
-                    @ApiResponse(responseCode = "400", description = "Erro de validação dos dados do Pessoa"),
-            }
-    )
-    ResponseEntity<PessoaDTO> cadastrarPessoa(@Valid @RequestBody PessoaCreateDTO pessoa) throws TemplateException, IOException;
+    private final PessoaService pessoaService;
 
-    @Operation(summary = "Listar Pessoas", description = "Lista todas as Pessoas do banco.")
-    @ApiResponse(responseCode = "200", description = "Retorna a lista de Pessoas")
-    List<PessoaDTO> listarPessoa();
+    @PostMapping
+    public ResponseEntity<PessoaDTO> cadastrarPessoa(@Valid @RequestBody PessoaCreateDTO pessoa) {
+        return new ResponseEntity<>(pessoaService.cadastrarPessoa(pessoa), HttpStatus.OK);
+    }
 
-    @Operation(summary = "Atualizar Pessoa", description = "Atualizar dados de uma Pessoa cadastrada no banco.")
-    @ApiResponses(
-            value = {
-                    @ApiResponse(responseCode = "200", description = "Atualiza Pessoa com sucesso"),
-                    @ApiResponse(responseCode = "400", description = "Erro de validação dos dados do Pessoa")
-            }
-    )
-    ResponseEntity<PessoaDTO> atualizarPessoa(@PathVariable("idPessoa") Integer id,
-                                                     @Valid @RequestBody PessoaCreateDTO pessoaAtualizar) throws Exception;
+    @GetMapping
+    public List<PessoaDTO> listarPessoa() {
+        return pessoaService.listarPessoas();
+    }
 
-    @Operation(summary = "Deletar Pessoa", description = "Deleta uma Pessoa pelo idPessoa")
-    @ApiResponses(
-            value = {
-                    @ApiResponse(responseCode = "200", description = "Deleta Pessoa com sucesso"),
-                    @ApiResponse(responseCode = "400", description = "Pessoa não cadastrado")
-            }
-    )
-    void deletar(@PathVariable("idPessoa") Integer id) throws Exception;
+    @PutMapping("/{idPessoa}")
+    public ResponseEntity<PessoaDTO> atualizarPessoa(@PathVariable("idPessoa") Integer id,
+                                                     @Valid @RequestBody PessoaCreateDTO pessoaAtualizar) throws RegraDeNegocioException {
+        return new ResponseEntity<>(pessoaService.atualizarPessoa(id, pessoaAtualizar), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{idPessoa}")
+    public void deletar(@PathVariable("idPessoa") Integer id) throws RegraDeNegocioException {
+        pessoaService.deletarPessoa(id);
+    }
+
+    @Operation(summary = "Listar Pessoas com filme")
+    @GetMapping("/listar-com-enderecos")
+    public List<PessoaEnderecoDTO> listEnderecoPessoa(@RequestParam(required = false) Integer idPessoa)
+            throws RegraDeNegocioException {
+        return pessoaService.listarEnderecoPessoa(idPessoa);
+    }
+
+    @Operation(summary = "Listar Pessoas com Contato")
+    @GetMapping("/listar-com-contato")
+    public List<PessoaContatoDTO> listContatoPessoa(@RequestParam(required = false) Integer idPessoa) throws RegraDeNegocioException {
+        return pessoaService.listarContatoPessoa(idPessoa);
+    }
+
+    @Operation(summary = "Listar Pessoas com Filmes")
+    @GetMapping("/listar-com-filme")
+    public List<PessoaFilmeDTO> listFilmePessoa(@RequestParam(required = false) Integer idPessoa) throws RegraDeNegocioException {
+        return pessoaService.listarFilmesPessoa(idPessoa);
+    }
+
+    @Operation(summary = "Listar o Relatório Personalizado")
+    @GetMapping("/pessoa-relatorio")
+    public List<RelatorioPersonalizadoDTO> findRelatorioPersonalizado(@RequestParam(required = false) Integer idPessoa) {
+        return pessoaService.listarRelatorioPersonalizado(idPessoa);
+    }
 }

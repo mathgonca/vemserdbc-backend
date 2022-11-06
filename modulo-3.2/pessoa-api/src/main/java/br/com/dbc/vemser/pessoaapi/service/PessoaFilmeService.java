@@ -1,9 +1,8 @@
 package br.com.dbc.vemser.pessoaapi.service;
 
-import br.com.dbc.vemser.pessoaapi.dto.FilmeAvaliadoDTO;
+import br.com.dbc.vemser.pessoaapi.dto.filme.FilmeAvaliadoDTO;
 import br.com.dbc.vemser.pessoaapi.entity.PessoaEntity;
 import br.com.dbc.vemser.pessoaapi.entity.PessoaFilmeEntity;
-import br.com.dbc.vemser.pessoaapi.entity.pk.PessoaFilmeId;
 import br.com.dbc.vemser.pessoaapi.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.pessoaapi.repository.PessoaFilmeRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;

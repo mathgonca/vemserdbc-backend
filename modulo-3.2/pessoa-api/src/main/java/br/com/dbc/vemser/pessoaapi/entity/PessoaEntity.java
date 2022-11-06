@@ -8,7 +8,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -40,7 +39,7 @@ public class PessoaEntity {
             joinColumns = {@JoinColumn(name = "id_pessoa")},
             inverseJoinColumns = {@JoinColumn(name = "id_endereco")})
     @JsonIgnore
-    private Set<EnderecoEntity> enderecos ;
+    private Set<EnderecoEntity> enderecos;
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "pessoa", cascade = CascadeType.ALL)
