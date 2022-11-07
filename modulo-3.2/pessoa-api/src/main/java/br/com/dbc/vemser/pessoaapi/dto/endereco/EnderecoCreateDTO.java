@@ -23,7 +23,6 @@ public class EnderecoCreateDTO {
     @Schema(description = "Tipo de Endereço", example = "RESIDENCIAL ou COMERCIAL")
     private TipoEndereco tipo;
 
-    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     private Integer idPessoa;
 
     @NotEmpty
@@ -57,7 +56,4 @@ public class EnderecoCreateDTO {
     @NotNull
     @Schema(example = "Brasil")
     private String pais;
-
-    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
-    private Set<PessoaEntity> pessoa;
 }

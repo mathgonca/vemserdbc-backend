@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import javax.validation.Valid;
 import java.util.List;
 
 public interface EnderecoControllerDoc {
@@ -31,7 +32,7 @@ public interface EnderecoControllerDoc {
             }
     )
     ResponseEntity<EnderecoDTO> cadastrarEndereco(@PathVariable Integer idPessoa,
-                                                  @RequestBody EnderecoCreateDTO endereco) throws RegraDeNegocioException;
+                                                  @RequestBody @Valid EnderecoCreateDTO endereco) throws RegraDeNegocioException;
 
     @Operation(summary = "Atualizar Endereço", description = "Atualizar dados de um Endereço cadastrado no banco.")
     @ApiResponses(
