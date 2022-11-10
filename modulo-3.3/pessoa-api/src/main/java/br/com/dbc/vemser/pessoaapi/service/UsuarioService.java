@@ -1,6 +1,6 @@
 package br.com.dbc.vemser.pessoaapi.service;
 
-import br.com.dbc.vemser.pessoaapi.CadastroDTO;
+import br.com.dbc.vemser.pessoaapi.dto.usuario.CadastroDTO;
 import br.com.dbc.vemser.pessoaapi.dto.usuario.CadastroResponseDTO;
 import br.com.dbc.vemser.pessoaapi.entity.UsuarioEntity;
 import br.com.dbc.vemser.pessoaapi.repository.UsuarioRepository;
