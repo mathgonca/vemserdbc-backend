@@ -12,25 +12,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collections;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 public class TokenAuthenticationFilter extends OncePerRequestFilter {
     private final TokenService tokenService;
+    private final String AUTHORIZATION = "Authorization";
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
-        String headerAuthorization = request.getHeader("Authorization");
-        Optional<UsuarioEntity> isValid = tokenService.isValid(headerAuthorization);
-
-        if(isValid.isEmpty()) {
-            SecurityContextHolder.getContext().setAuthentication(null);
-        } else {
-            UsuarioEntity usuario = isValid.get();
-            UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(usuario.getLogin(), usuario.getSenha(), Collections.emptyList());
-            SecurityContextHolder.getContext().setAuthentication(token);
-        }
+        String headerAuthorization = request.getHeader(AUTHORIZATION);
+        UsernamePasswordAuthenticationToken dtoDoSpring = tokenService.validate(headerAuthorization);
+        SecurityContextHolder.getContext().setAuthentication(dtoDoSpring);
 
         filterChain.doFilter(request, response);
     }

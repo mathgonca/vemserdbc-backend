@@ -1,7 +1,7 @@
 package br.com.dbc.vemser.pessoaapi.controller.feignclient;
 
 import br.com.dbc.vemser.pessoaapi.client.DadosPessoaisClient;
-import br.com.dbc.vemser.pessoaapi.dto.DadosPessoaisDTO;
+import br.com.dbc.vemser.pessoaapi.dto.usuario.DadosPessoaisDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
