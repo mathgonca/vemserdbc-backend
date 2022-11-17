@@ -21,18 +21,18 @@ public class Main {
         System.out.println("-- Find Queries");
         System.out.println("-".repeat(75));
         System.out.println("-- Find Todos");
-        alunos.find().forEach(System.out::println);
+        alunos.find().forEach(document -> System.out.println(document.toJson()));
 
         Document aluno = alunos.find(new Document("nome", "Gabriel"))
                 .first();
         System.out.println("-".repeat(75));
         System.out.println("-- Find Gabriel");
-        System.out.println(aluno);
+        System.out.println(aluno.toJson());
 
         System.out.println("-".repeat(75));
         System.out.println("-- Find alunos com Idade menor ou igual a 25");
         alunos.find(Filters.lte("idade", 25))
-                .forEach(System.out::println);
+                .forEach(document -> System.out.println(document.toJson()));
 
         mongoClient.close();
     }
