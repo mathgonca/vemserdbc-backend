@@ -46,10 +46,10 @@ public class ProdutorService {
 
             @Override
             public void onSuccess(SendResult<String, String> result) {
-                log.info("[{}] {} {} diz: {}",
-                        nomeChat,
+                log.info("{} {} ({}): {}",
                         mensagemDTO.getDataCriacao().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")),
                         mensagemDTO.getUsuario(),
+                        nomeChat,
                         mensagemDTO.getMensagem()
                 );
             }

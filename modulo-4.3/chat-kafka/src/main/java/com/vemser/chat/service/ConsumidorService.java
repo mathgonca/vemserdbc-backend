@@ -25,7 +25,7 @@ public class ConsumidorService {
     )
     public void consumirChatGeral(@Payload String mensagem) throws JsonProcessingException {
         MensagemDTO mensagemDTO = objectMapper.readValue(mensagem, MensagemDTO.class);
-        log.info("[GERAL] {} {} diz: {}",
+        log.info("{} [{}]: {}",
                 mensagemDTO.getDataCriacao().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")),
                 mensagemDTO.getUsuario(),
                 mensagemDTO.getMensagem());
@@ -38,7 +38,7 @@ public class ConsumidorService {
     )
     public void consumirChatMatheus(@Payload String mensagem) throws JsonProcessingException {
         MensagemDTO mensagemDTO = objectMapper.readValue(mensagem, MensagemDTO.class);
-        log.info("[PRIVADO] {} {} diz:  {}",
+        log.info("{} [{}] (privado): {}",
                 mensagemDTO.getDataCriacao().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")),
                 mensagemDTO.getUsuario(),
                 mensagemDTO.getMensagem());
