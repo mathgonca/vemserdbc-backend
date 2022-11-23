@@ -32,8 +32,8 @@ public class ConsumidorService {
     }
 
     @KafkaListener(
-            groupId = "grupo2",
-            clientIdPrefix = "meu-chat",
+            groupId = "${spring.kafka.consumer.group-id}",
+            clientIdPrefix = "${spring.kafka.consumer.client-id}",
             topicPartitions = {@TopicPartition(topic = "${meu.kafka.topic}", partitions = {"4"})}
     )
     public void consumirChatMatheus(@Payload String mensagem) throws JsonProcessingException {

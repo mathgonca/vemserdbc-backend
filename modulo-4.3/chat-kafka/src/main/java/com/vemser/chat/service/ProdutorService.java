@@ -57,7 +57,8 @@ public class ProdutorService {
     }
 
     public void enviarMensagemChatsPrivados(String mensagem, List<NomeChat> nomeChatList) {
-        MensagemDTO mensagemDTO = new MensagemDTO("MATHEUS", mensagem, LocalDateTime.now());
+        MensagemDTO mensagemDTO = new MensagemDTO("${spring.kakfa.producer.client-id}",
+                mensagem, LocalDateTime.now());
         nomeChatList.stream()
                 .forEach(nomeChat -> {
                     try {
