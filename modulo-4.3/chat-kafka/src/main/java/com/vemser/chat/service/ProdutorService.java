@@ -6,6 +6,7 @@ import com.vemser.chat.dto.MensagemDTO;
 import com.vemser.chat.enums.NomeChat;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.kafka.support.SendResult;
@@ -24,6 +25,8 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Slf4j
 public class ProdutorService {
+    @Value(value = "${spring.kakfa.producer.client-id}")
+    private String usuarioPrincipal;
     private final KafkaTemplate<String, String> kafkaTemplate;
     private final ObjectMapper objectMapper;
 
@@ -57,7 +60,7 @@ public class ProdutorService {
     }
 
     public void enviarMensagemChatsPrivados(String mensagem, List<NomeChat> nomeChatList) {
-        MensagemDTO mensagemDTO = new MensagemDTO("${spring.kakfa.producer.client-id}",
+        MensagemDTO mensagemDTO = new MensagemDTO(usuarioPrincipal,
                 mensagem, LocalDateTime.now());
         nomeChatList.stream()
                 .forEach(nomeChat -> {
